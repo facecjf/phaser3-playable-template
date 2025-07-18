@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playable Ad Preview</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: white;
+    }
+    .main-container {
+      display: flex;
+    }
+    .sidebar {
+      width: 320px;
+      background-color: rgb(220 38 38 / 1);
+      color: white;
+      padding: 20px;
+      height: 100vh;
+      box-sizing: border-box;
+    }
+    .sidebar h2 {
+      font-size: 20px;
+      text-align: center;
+      margin-top: 20px;
+      margin-bottom: 60px;
+    }
+    .sidebar h3 {
+      font-size: 18px;
+      text-align: left;
+      margin-top: 20px;
+      border-top: 0px solid;
+      border-left: 0px solid;
+      border-right: 0px solid;
+      border-bottom: 1px solid rgb(182 30 30 / 1);
+      padding: 10px;
+    }
+    .sidebar hr {
+      border-top: 0px solid;
+      border-left: 0px solid;
+      border-right: 0px solid;
+      border-bottom: 1px solid rgb(182 30 30 / 1);
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    .menu-items button {
+      background-color: rgb(182 30 30 / 1);
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px 0 0 35px;
+      border-radius: 20px;
+      cursor: pointer;
+      width: 75%;
+      text-align: center;
+    }
+    .menu-items button.selected {
+      background-color: rgb(250, 84, 84);
+      color: white;
+    }
+   
+    .sidebar input[type="file"] {
+      margin: 20px 0;
+      border-radius: 20px;
+      padding: 10px;
+      background-color: rgb(182 30 30 / 1);
+      color: white;
+      border: none;
+    }
+    .sidebar label {
+      color: white;
+    }
+    .sidebar button[data-refresh] {
+      background-color: rgb(182 30 30 / 1);
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px 0 0 35px;
+      border-radius: 20px;
+      cursor: pointer;
+      width: 75%;
+      text-align: center;
+    }
+    .sidebar button[data-refresh]:hover {
+      background-color: rgb(250, 84, 84);
+      color: white;
+    }
+    .content {
+      flex: 1;
+      text-align: center;
+      padding: 20px;
+    }
+    .content h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: black;
+    }
+    .device-frame {
+      border: 10px solid black;
+      border-radius: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      display: inline-block;
+      margin: 0 auto;
+    }
+    #playable-iframe {
+      display: block;
+      border: none;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <div class="sidebar">
+      <h2>Playable Ad<br>Preview</h2>
+      
+      <div class="menu-items">
+        <h3>Device Type</h3>
+        <button data-device-type="phone" class="selected">Phone</button>
+        <button data-device-type="tablet">Tablet</button>
+      </div>
+      <div class="menu-items">
+        <h3>Operating System</h3>
+        <button data-platform="ios" class="selected">iOS</button>
+        <button data-platform="android">Android</button>
+      </div>
+      <div class="menu-items">
+        <h3>Orientation</h3>
+        <button data-orientation="portrait" class="selected">Portrait</button>
+        <button data-orientation="landscape">Landscape</button>
+      </div>
+      
+      <h3>Choose File</h3>
+      <input type="file" id="file-input" accept=".html">
+      <h3>Refresh</h3>
+      <button data-refresh="refresh">Refresh</button>
+    </div>
+    <div class="content">
+      <h1 id="file-name">Playable Ad</h1>
+      <script>
+        document.getElementById('file-input').addEventListener('change', function (event) {
+          const file = event.target.files[0];
+          document.getElementById('file-name').textContent = file ? file.name : 'Playable Ad';
+        });
+      </script>
+      <div class="device-frame">
+        <iframe id="playable-iframe" scrolling="no"></iframe>
+      </div>
+    </div>
+  </div>
+  <script>
+    const dimensions = {
+      phone: {
+        ios: { width: 375, height: 667 },
+        android: { width: 360, height: 740 }
+      },
+      tablet: {
+        ios: { width: 768, height: 1024 },
+        android: { width: 712, height: 1138 }
+      }
+    };
+
+    let deviceType = 'phone';
+    let platform = 'ios';
+    let orientation = 'portrait';
+
+    function updateDimensions() {
+      let { width, height } = dimensions[deviceType][platform];
+      if (orientation === 'landscape') {
+        [width, height] = [height, width];
+      }
+      const deviceFrame = document.querySelector('.device-frame');
+      deviceFrame.style.width = `${width}px`;
+      deviceFrame.style.height = `${height}px`;
+      applyScaling();
+    }
+
+    function applyScaling() {
+      const iframe = document.getElementById('playable-iframe');
+      if (!iframe.contentWindow) return;
+      const doc = iframe.contentDocument;
+      if (!doc || !doc.body) return;
+      const body = doc.body;
+      if (document.getElementById('scale-to-fit')) {
+        const scaleX = iframe.clientWidth / body.scrollWidth;
+        const scaleY = iframe.clientHeight / body.scrollHeight;
+        const scale = Math.min(scaleX, scaleY);
+        body.style.transform = `scale(${scale})`;
+        body.style.transformOrigin = '0 0';
+        body.style.width = `${body.scrollWidth}px`;
+        body.style.height = `${body.scrollHeight}px`;
+      } else {
+        body.style.transform = '';
+        body.style.width = '';
+        body.style.height = '';
+      }
+    }
+
+    function refreshIframe() {
+      if (!currentUrl) return;
+      const iframe = document.getElementById('playable-iframe');
+      iframe.src = currentUrl;
+    }
+
+    const deviceTypeButtons = document.querySelectorAll('.menu-items button[data-device-type]');
+    deviceTypeButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        deviceTypeButtons.forEach(btn => btn.classList.remove('selected'));
+        button.classList.add('selected');
+        deviceType = button.dataset.deviceType;
+        updateDimensions();
+        refreshIframe();
+      });
+    });
+
+    const platformButtons = document.querySelectorAll('.menu-items button[data-platform]');
+    platformButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        platformButtons.forEach(btn => btn.classList.remove('selected'));
+        button.classList.add('selected');
+        platform = button.dataset.platform;
+        updateDimensions();
+        refreshIframe();
+      });
+    });
+
+    const orientationButtons = document.querySelectorAll('.menu-items button[data-orientation]');
+    orientationButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        orientationButtons.forEach(btn => btn.classList.remove('selected'));
+        button.classList.add('selected');
+        orientation = button.dataset.orientation;
+        updateDimensions();
+      });
+    });
+
+    const refreshButtons = document.querySelectorAll('button[data-refresh]');
+    refreshButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        refreshButtons.forEach(btn => btn.classList.remove('selected'));
+        button.classList.add('selected');
+        refreshIframe();
+      });
+    });
+
+    const DEFAULT_PLAYABLE = 'index.html';
+
+    let currentUrl = DEFAULT_PLAYABLE;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const iframe = document.getElementById('playable-iframe');
+      iframe.src = currentUrl;
+      iframe.onload = applyScaling;
+    });
+
+    document.getElementById('file-input').addEventListener('change', function (event) {
+      if (currentUrl && currentUrl.startsWith('blob:')) {
+        URL.revokeObjectURL(currentUrl);
+      }
+      const file = event.target.files[0];
+      if (file) {
+        currentUrl = URL.createObjectURL(file);
+        document.getElementById('file-name').textContent = file.name;
+      } else {
+        currentUrl = DEFAULT_PLAYABLE;
+        document.getElementById('file-name').textContent = 'Playable Ad';
+      }
+      refreshIframe();
+    });
+
+    updateDimensions();
+  </script>
+</body>
+</html>

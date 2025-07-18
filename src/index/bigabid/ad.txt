@@ -1,0 +1,11 @@
+<script src="mraid.js"></script>
+<script>window.BIGABID_BIDTIMEMACROS = {
+    mraid_viewable: unescape("#IMP_TRACE_MRAID_VIEWABLE_ESC#"),
+    game_viewable: unescape("#IMP_TRACE_GAME_VIEWABLE_ESC#"),
+    engagement: unescape("#IMP_TRACE_ENGAGEMENT_ESC#"),
+    complete: unescape("#IMP_TRACE_COMPLETE_ESC#"),
+    click: unescape("#CLICK_TEMPLATE_ESC#"),
+    final_url: unescape("#FINAL_LANDING_URL_ESC#")
+}</script>
+<script src="#BIGABID_PLAYABLE_CDN_URL#"></script>
+%{IMP_BEACON}

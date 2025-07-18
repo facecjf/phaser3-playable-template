@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        body {
+        margin: 0;
+        padding: 0;
+        color: rgba(255, 255, 255, 0.87);
+        background-color: #000000;
+      }
+      #app {
+        height: 100vh; 
+        width: 100vw;
+        overflow: hidden;
+      }
+    </style>     
+<!-- MRAID script - Unity will inject this, but the tester looks for it -->
+<!-- <script src="mraid.js"></script> -->
+<script>
+    var userAgent = navigator.userAgent || navigator.vendor;
+    var url = 'https://google.com'; // IOS
+    var android = 'https://google.com'; // ANDROID
+    if (/android/i.test(userAgent)) {
+      url = android;
+    }
+
+    // Wait for the SDK to become ready
+    function Start() {
+      // Check if MRAID exists
+      if (typeof mraid === 'undefined') {
+        console.log('MRAID not available, retrying...');
+        setTimeout(Start, 100);
+        return;
+      }
+      
+      if (mraid.getState() === 'loading') {
+        // If the SDK is still loading, add a listener for the 'ready' event
+        mraid.addEventListener('ready', onSdkReady);
+      } else {
+        // Otherwise, if the SDK is ready, execute your function
+        onSdkReady();
+      }
+    }
+
+    // Implement a function that shows the ad when it first renders
+    function onSdkReady() {
+      // The viewableChange event fires if the ad container's viewability status changes
+      // Add a listener for the viewabilityChange event, to handle pausing and resuming
+      mraid.addEventListener('viewableChange', viewableChangeHandler);
+      
+      // The isViewable method returns whether the ad container is viewable on the screen
+      if (mraid.isViewable()) {
+        // If the ad container is visible, play the ad
+        showMyAd();
+      }
+    }
+
+    // Implement a function for executing the ad
+    function showMyAd() {
+      // Insert code for showing your playable ad
+      console.log("Unity ad is now viewable");
+      // The game will handle this through the AdNetworkManager
+    }
+
+    // Implement a function that handles pausing and resuming the ad based on visibility
+    function viewableChangeHandler(viewable) {
+      if (viewable) {
+        // If the ad is viewable, show the ad
+        showMyAd();
+      } else {
+        // If not, pause the ad
+        console.log("Unity ad is no longer viewable");
+        // The game will handle pausing through the AdNetworkManager
+      }
+    }
+
+    // Start the initialization process when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', Start);
+    } else {
+      Start();
+    }
+  </script>
+</head>
+<body>
+  <div id="app">
+      <div id="ad-container">
+        <script type="module" crossorigin>
+          // P3 SCRIPT HERE
+        </script>
+      </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        body {
+        margin: 0;
+        padding: 0;
+        color: rgba(255, 255, 255, 0.87);
+        background-color: #000000;
+      }
+      #app {
+        height: 100vh; 
+        width: 100vw;
+        overflow: hidden;
+      }
+    </style>  
+
+<script src="mraid.js"></script>
+<script>
+  (function () {
+    if (typeof mraid === "undefined") {
+      console.warn("mraid.js not present running in desktop preview");
+      startPlayable();
+      return;
+    }
+
+    let isReady = false;
+    let isPlayableState = false;
+    let isViewable = false;
+
+    const playableStates = ["default", "expanded"];
+    const tryStart = () => {
+      if (isReady && isPlayableState && isViewable) {
+        startPlayable();
+      }
+    };
+
+    mraid.addEventListener("ready", () => {
+      isReady = true;
+      tryStart();
+    });
+
+    mraid.addEventListener("stateChange", (state) => {
+      isPlayableState = playableStates.includes(state);
+      tryStart();
+    });
+
+    mraid.addEventListener("viewableChange", (viewable) => {
+      isViewable = viewable;
+      tryStart();
+    });
+
+    mraid.addEventListener("audioVolumeChange", audioVolumeChangeCallback);
+
+    if (mraid.getState() !== "loading") {
+      isReady = true;
+      isPlayableState = playableStates.includes(mraid.getState());
+    }
+    isViewable = mraid.isViewable();
+
+    function startPlayable() {
+      if (window._hasStartedPlayable) return;
+      window._hasStartedPlayable = true;
+      if (typeof window.bootGame === "function") {
+        window.bootGame();
+      }
+      const evt = new CustomEvent("adViewableChange", {
+        detail: { viewable: true },
+      });
+      window.dispatchEvent(evt);
+    }
+  })();
+  function audioVolumeChangeCallback(volume){
+      console.log("MRAID audioVolumeChange event fired. Volume:", volume);
+      
+      // MRAID volume is 0-100, where 0 is muted
+      let shouldMute = volume === 0;
+      
+      // Wait for game to be initialized before trying to control audio
+      if (window.gameScene) {
+        if (shouldMute) {
+          window.muteGameSound(window.gameScene);
+        } else {
+          window.unmuteGameSound(window.gameScene);
+        }
+      } else {
+        // Store the audio state for when the game initializes
+        window.initialAudioMuted = shouldMute;
+      }
+    }
+</script>
+<script>
+	  var userAgent = navigator.userAgent || navigator.vendor;
+    var url = 'https://google.com'; // IOS
+    var android = 'https://google.com'; // ANDROID
+    if (/android/i.test(userAgent)) {
+      url = android;
+	  };  /* Call window.openStore(anyUrl) from your game */
+  window.openStore = function (url) {
+    if (typeof mraid !== "undefined") {
+      mraid.open(url);
+    } else {
+      window.open(url, "_blank");
+    }
+  };
+</script>
+</head>
+<body>
+  <div id="app">
+      <div id="ad-container">
+        <script type="module" crossorigin>
+          // P3 SCRIPT HERE
+        </script>
+      </div>
+  </div>
+</body>
+</html>
