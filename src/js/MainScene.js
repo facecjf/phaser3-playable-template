@@ -304,12 +304,14 @@ export default class MainScene extends Phaser.Scene {
         }
 
         //// TESTING PARTICLE FACTORY ////
+
         // Create explosion particle emitter 
         // (use: this.createExplosionEmitter(x, y, lifespan, speedMin, speedMax, scaleStart, scaleEnd, gravityY, blendMode, quantity) )
-        this.particleFactory.createExplosionEmitter(this.input.activePointer.x, this.input.activePointer.y, 'ember', 4000, 20, 150, 0.8, 0, 300, 'ADD', 48);
+        //this.particleFactory.createExplosionEmitter(this.input.activePointer.x, this.input.activePointer.y, 'ember', 4000, 20, 150, 0.8, 0, 300, 'ADD', 48);
+        
         // Create bounds particle emitter
         // (use: this.createBoundsEmitter(texture, object, blendMode, zoneQuantity, quantity, startQuantity, lifespan, speed, scaleStart, scaleEnd, duration, emitting) )
-        this.particleFactory.createBoundsEmitter('ember', this.tutText, 'ADD', 100, 48, 48, 1500, 24, 0.5, 0, 3000, false);
+        //this.particleFactory.createBoundsEmitter('ember', this.tutText, 'ADD', 100, 48, 48, 1500, 24, 0.5, 0, 3000, false);
     }
 
     // Setup event listeners
