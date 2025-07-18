@@ -3,6 +3,7 @@ import * as AdNetworkManager from './utils/AdNetworkManager';
 import * as ResponsiveSettings from './utils/ResponsiveSettings';
 import * as CTA from './utils/CTA';
 import * as UIHand from './utils/UIHand';
+import * as ParticleFactory from './utils/ParticleFactory';
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
@@ -70,6 +71,8 @@ export default class MainScene extends Phaser.Scene {
         this.initializeGameVariables();
         // Initialize UI hand
         this.uiHand = new UIHand.default(this);
+        // Initialize particle factory
+        this.particleFactory = new ParticleFactory.default(this);
         // Create game objects
         this.createGameObjects();
         // Setup event listeners
@@ -131,7 +134,7 @@ export default class MainScene extends Phaser.Scene {
         this.overlay = this.add.graphics();
 
         // Start Embers
-        this.createEmberEmitter();
+        this.particleFactory.createEmberEmitter('ember');
 
         // Pause all sounds
         this.pauseSoundObjects();
@@ -299,50 +302,14 @@ export default class MainScene extends Phaser.Scene {
             this.stopTutTextTween();
             this.resetInactivityTimer();
         }
-    }
 
-    // Create ember particle emitter
-    createEmberEmitter() {
-        //const yOffset = this.isPortrait ? 350 * this.scaleFactor : 200 * this.scaleFactor;
-        // Create the emitter
-        this.emberEmitter = this.add.particles(0, 0, 'ember', {
-            x: { min: 0, max: this.gameWidth },
-            y: this.gameHeight,
-            speed: { min: 25, max: 75 },
-            angle: { min: 180, max: 360 },
-            scale: { start: 1.25 * this.scaleFactor, end: 0.25 * this.scaleFactor },
-            alpha: { start: 1, end: 0},
-            lifespan: { min: 8000, max: 12000 },
-            gravityY: -10,
-            frequency: 80,
-            blendMode: 'ADD',
-            quantity: 1,
-            advance: 4000,
-            emitCallback: (particle) => {
-                // Optional: Apply deltaMultiplier to individual particles if needed
-                particle.velocityX *= this.deltaMultiplier;
-                particle.velocityY *= this.deltaMultiplier;
-            },
-            deathZone: {
-                type: 'onLeave',
-                source: new Phaser.Geom.Rectangle(0, 0, this.gameWidth, this.gameHeight)
-            }
-        }).setDepth(10);
-    }
-
-    // Stop and destroy ember emitter
-    stopEmberEmitter() {
-        if (this.emberEmitter) {
-            this.emberEmitter.destroy();
-            this.emberEmitter = null;
-        }
-    }
-
-    // Reposition ember emitter
-    repositionEmberEmitter() {
-        if (this.emberEmitter) {
-            this.emberEmitter.setPosition(this.centerX, this.gameHeight);
-        }
+        //// TESTING PARTICLE FACTORY ////
+        // Create explosion particle emitter 
+        // (use: this.createExplosionEmitter(x, y, lifespan, speedMin, speedMax, scaleStart, scaleEnd, gravityY, blendMode, quantity) )
+        this.particleFactory.createExplosionEmitter(this.input.activePointer.x, this.input.activePointer.y, 'ember', 4000, 20, 150, 0.8, 0, 300, 'ADD', 48);
+        // Create bounds particle emitter
+        // (use: this.createBoundsEmitter(texture, object, blendMode, zoneQuantity, quantity, startQuantity, lifespan, speed, scaleStart, scaleEnd, duration, emitting) )
+        this.particleFactory.createBoundsEmitter('ember', this.tutText, 'ADD', 100, 48, 48, 1500, 24, 0.5, 0, 3000, false);
     }
 
     // Setup event listeners
@@ -455,13 +422,13 @@ export default class MainScene extends Phaser.Scene {
         }
 
         // stop ember emitter
-        this.stopEmberEmitter();
+        this.particleFactory.stopEmberEmitter();
 
         // Reposition handler
         this.repositionHandler();
 
         // create ember emitter
-        this.createEmberEmitter();
+        this.particleFactory.createEmberEmitter();
         
         // Resume the scene after resizing
         this.scene.resume();
@@ -757,6 +724,7 @@ export default class MainScene extends Phaser.Scene {
         }
         // Store the current frame time for next frame's delta calculation
         this.lastFrameTime = time;
+
     }
 }
 
