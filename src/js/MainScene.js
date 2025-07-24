@@ -430,7 +430,7 @@ export default class MainScene extends Phaser.Scene {
         this.repositionHandler();
 
         // create ember emitter
-        this.particleFactory.createEmberEmitter();
+        this.particleFactory.createEmberEmitter('ember');
         
         // Resume the scene after resizing
         this.scene.resume();
