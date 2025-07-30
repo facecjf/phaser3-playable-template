@@ -41,7 +41,7 @@
 ### Getting Started
 You need to either download this project or clone it:
 ```bash
-git clone [https://github.com/facecjf/phaser3-playable-template.git](https://github.com/facecjf/phaser3-playable-template)
+git clone https://github.com/facecjf/phaser3-playable-template.git
 ```
 Make sure you are in the project, if not then go there:
 ```bash
