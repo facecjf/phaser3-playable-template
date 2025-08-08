@@ -46,7 +46,10 @@ export default class ResponsiveSettings {
             this.scaleFactor = this.isPortrait ? baseScaleX : baseScaleY;
         } else if (this.deviceType === 'tablet') {
             // tablet
-            this.scaleFactor = Math.min(baseScaleX, baseScaleY) * 0.85;
+            this.scaleFactor = Math.min(baseScaleX, baseScaleY) * 0.70;
+        } else if (this.deviceType === 'androidTablet') {
+            // android tablet
+            this.scaleFactor = Math.min(baseScaleX, baseScaleY) * 0.80;
         } else if (this.deviceType === 'smallPhone') {
             // small phone
             this.scaleFactor = Math.min(baseScaleX, baseScaleY) * 0.85;
@@ -76,11 +79,15 @@ export default class ResponsiveSettings {
             console.log('%cResponsiveSettings::Device: square', 'color: #00e1f8; background:rgb(29, 29, 29);');
             return 'square';
         // check if tablet
-        } else if ((this.gameWidth >= 712 && this.gameHeight >= 1024) || (this.gameWidth >= 1024 && this.gameHeight >= 712)) {
+        } else if ((this.gameWidth >= 768 && this.gameHeight >= 1024) || (this.gameWidth >= 1024 && this.gameHeight >= 768)) {
             console.log('%cResponsiveSettings::Device: tablet', 'color: #00e1f8; background:rgb(29, 29, 29);');
             return 'tablet';
         // check if small phone
-        } else if (this.gameWidth <= 320 && this.gameHeight <= 480) {
+        } else if ((this.gameWidth >= 712 && this.gameHeight >= 1024) || (this.gameWidth >= 1024 && this.gameHeight >= 712)) {
+            console.log('%cResponsiveSettings::Device: tablet', 'color: #00e1f8; background:rgb(29, 29, 29);');
+            return 'androidTablet';
+        // check if small phone
+        }else if (this.gameWidth <= 320 && this.gameHeight <= 480) {
             console.log('%cResponsiveSettings::Device: smallPhone', 'color: #00e1f8; background:rgb(29, 29, 29);');
             return 'smallPhone';
         // check if phone
