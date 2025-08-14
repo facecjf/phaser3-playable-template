@@ -224,7 +224,7 @@ export default class MainScene extends Phaser.Scene {
 
         // Create confetti emitter (optional)
         // use: this.particleFactory.createConfettiEmitter(x, y, amount, lifespan, speedMin, speedMax)
-        this.particleFactory.createConfettiEmitter(this.cta.ctaButton.x, this.cta.ctaButton.y, 12, 2500, 50, 350);
+        // this.particleFactory.createConfettiEmitter(this.cta.ctaButton.x, this.cta.ctaButton.y, 12, 2500, 50, 350);
     }
 
     // Create tutorial message
