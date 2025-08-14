@@ -38,24 +38,41 @@ export default class CTA {
     }
 
     // create CTA tween
-    createCTATween() {
+    createCTATween(tweenType) {
         if (this.ctaTween) {
             this.ctaTween.stop();
         }
 
-        // Create a new tween
-        this.ctaTween = this.scene.tweens.add({
-            targets: this.ctaButton,
-            scaleX: '+=0.1',
-            scaleY: '+=0.1',
-            duration: 500,
-            yoyo: true,
-            repeat: -1,
-            ease: 'Sine.easeInOut',
-            onUpdate: () => {
-                this.updateCTATextPosition();
-            }
-        });
+        if (tweenType === 'SC') {
+            // Create a new tween
+            this.ctaTween = this.scene.tweens.add({
+                targets: this.ctaButton,
+                scaleX: '-=0.2',
+                scaleY: '-=0.2',
+                duration: 200,
+                yoyo: true,
+                repeat: 0,
+                ease: 'quad.inout',
+                onUpdate: () => {
+                    this.updateCTATextPosition();
+                }
+            });
+        } else {
+            // Create a new tween
+            this.ctaTween = this.scene.tweens.add({
+                targets: this.ctaButton,
+                scaleX: '+=0.1',
+                scaleY: '+=0.1',
+                duration: 500,
+                yoyo: true,
+                repeat: -1,
+                ease: 'quad.inout',
+                onUpdate: () => {
+                    this.updateCTATextPosition();
+                }
+            });
+
+        }
     }
 
     // update CTA text position

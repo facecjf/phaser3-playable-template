@@ -141,9 +141,6 @@ export default class MainScene extends Phaser.Scene {
         // create UI elements
         this.setupUI();
 
-        // Create UI hand (uiHand initilized in create method)
-        this.uiHand.createUIHand();
-
         // create tutorial message
         this.createTutorialMessage();
  
@@ -174,12 +171,14 @@ export default class MainScene extends Phaser.Scene {
         // CTA
         const ctaY = this.isPortrait ? 200 * this.scaleFactor : 150 * this.scaleFactor;   
         this.cta = new CTA.default(this);
-        this.cta.createCTA(this.centerX, (this.gameHeight - ctaY));
+        this.cta.createCTA(this.centerX, (this.centerY + ctaY));
         this.cta.ctaButton.setScale(this.ctaScale * this.scaleFactor);
         this.cta.ctaButton.setOrigin(0.5, 0.5);
         this.cta.createCTAText();
-        // Start the CTA tween when the game ends
-        this.cta.createCTATween();
+        
+
+        // Create UI hand (uiHand initilized in create method)
+        this.uiHand.createUIHand('SC');
 
         // Legal
         this.legal = this.add.image(this.centerX, this.gameHeight - 35 * this.scaleFactor, "legal")
@@ -187,6 +186,11 @@ export default class MainScene extends Phaser.Scene {
         // Disclaimer
         this.disclaimer = this.add.image(this.centerX, this.gameHeight - 20 * this.scaleFactor, "disclaimer")
             .setScale(this.scaleFactor);
+    }
+
+    // Create CTA tween for SC
+    createCTATweenSC() {
+        this.cta.createCTATween('SC');
     }
 
     // Create tutorial message

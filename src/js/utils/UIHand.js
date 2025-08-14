@@ -24,24 +24,32 @@ export default class UIHand {
     }
 
     // Initialize UI hand
-    initializeUIHand() {
-        this.setInitialPosition(
-            this.scene.centerX - 120 * this.scaleFactor,
-            this.scene.centerY + 120 * this.scaleFactor,
-            this.scene.centerX + 120 * this.scaleFactor,
-            this.scene.centerY + 120 * this.scaleFactor
-        );
+    initializeUIHand(tweenType) {
+        if (tweenType === 'SC') {
+            this.uiHandStartX = this.scene.cta.ctaButton.x - 50 * this.scaleFactor;
+            this.uiHandStartY = this.scene.cta.ctaButton.y + 60 * this.scaleFactor;
+            this.uiHandEndX = this.scene.cta.ctaButton.x;
+            this.uiHandEndY = this.scene.cta.ctaButton.y + 80 * this.scaleFactor;
+        } else {
+            this.setInitialPosition(
+                this.scene.centerX - 120 * this.scaleFactor,
+                this.scene.centerY + 120 * this.scaleFactor,
+                this.scene.centerX + 120 * this.scaleFactor,
+                this.scene.centerY + 120 * this.scaleFactor
+            );
+        }
     }
 
     // Create and set up the UI hand for guiding user interactions
-    createUIHand() {
+    createUIHand(tweenType) {
         // Initialize UI hand
         if (!this.uiHand) { 
-            this.initializeUIHand();
+            this.initializeUIHand(tweenType);
         }
+       
         // Create UI hand
         const uiHand = this.scene.add.image(this.uiHandStartX, this.uiHandStartY, 'uihand')
-                .setDepth(20)
+                .setDepth(50)
                 .setScale(this.scene.scaleFactor);
             
         let currentTween = null;
@@ -52,12 +60,32 @@ export default class UIHand {
                 targets: uiHand,
                 x: this.uiHandEndX,
                 y: this.uiHandEndY,
-                ease: 'Sine.easeInOut',
+                ease: 'quad.inout',
                 duration: 1000,
                 repeat: -1,
                 yoyo: true,
                 onUpdate: (tween, target) => {
                     // No extra work needed, Phaser handles the delta time internally
+                }
+            });
+        };
+
+        const createTweenSC = () => {
+            if (currentTween) currentTween.stop();
+            currentTween = this.scene.tweens.add({
+                targets: uiHand,
+                x: this.uiHandEndX,
+                y: this.uiHandEndY,
+                scale: '-=0.25',
+                ease: 'quad.inout',
+                duration: 750,
+                repeat: -1,
+                yoyo: true,
+                onUpdate: (tween, target) => {
+                    // No extra work needed, Phaser handles the delta time internally
+                },
+                onYoyo: () => {
+                    this.scene.createCTATweenSC();
                 }
             });
         };
@@ -68,7 +96,12 @@ export default class UIHand {
             this.uiHandEndX = endX;
             this.uiHandEndY = endY;
             uiHand.setPosition(startX, startY);
-            createTween();
+
+            if (tweenType === 'SC') {
+                createTweenSC();
+            } else {
+                createTween();
+            }
         };
     
         const hide = () => {
@@ -78,7 +111,11 @@ export default class UIHand {
     
         const show = () => {
             uiHand.setAlpha(1);
-            createTween();
+            if (tweenType === 'SC') {
+                createTweenSC();
+            } else {
+                createTween();
+            }
         };
     
         const stopTween = () => {
@@ -90,7 +127,11 @@ export default class UIHand {
         };
     
         // Create tween
-        createTween();
+        if (tweenType === 'SC') {
+            createTweenSC();
+        } else {
+            createTween();
+        }
     
         this.uiHandController = { uiHand, setPosition, hide, show, stopTween, resize };
 
