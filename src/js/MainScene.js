@@ -218,11 +218,6 @@ export default class MainScene extends Phaser.Scene {
     createTutorialMessage() {
         const topElementsY = 120 * this.scaleFactor;
         const tutY = this.isPortrait ? topElementsY + 150 * this.scaleFactor : topElementsY;
-
-        // Tutorial BG
-        // this.tutBG = this.add.image(this.centerX, tutBGY, "tutbg")
-        //     .setDepth(10)
-        //     .setScale(this.scaleFactor);
         
         // Add bitmap text to tutBG
         this.tutText = this.add.bitmapText(this.centerX, tutY, 'gameFont', this.getLocalizedText('game_tut'), this.tutTextSize, 1)
@@ -545,7 +540,6 @@ export default class MainScene extends Phaser.Scene {
 
         // Tutorial text
         const tutY = this.isPortrait ? topElementsY + 150 * this.scaleFactor : topElementsY;
-        // this.tutBG.setPosition(this.centerX, tutBGY).setScale(this.scaleFactor);
 
         this.tutTextBaseScale = this.scaleFactor;
         this.tutText.setPosition(this.centerX, tutY);

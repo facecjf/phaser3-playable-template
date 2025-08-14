@@ -27,7 +27,6 @@ export default class PreloaderScene extends Phaser.Scene {
             uihand: require('../img/ui_hand.png'),
             legal: require('../img/legal.png'),
             disclaimer: require('../img/disclaimer.png'),
-            tutbg: require('../img/tutbg.png'),
             ember: require('../img/ember.png'),
             sparkle: require('../img/sparkle.png'),
             item_01: require('../img/item_01.png'),
