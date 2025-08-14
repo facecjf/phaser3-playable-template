@@ -147,6 +147,11 @@ export default class MainScene extends Phaser.Scene {
         // Start Tut Tween
         this.startTutTextTween();
 
+        // Create area emitter (optional)
+        // use: this.particleFactory.createAreaEmitter(texture, object, blendMode, particleDuration)
+        this.particleFactory.createAreaEmitter('sparkle', this.logo, 'ADD', 1000);
+        
+
         // ADD CALLS TO NEW GAME METHODS HERE //
     }
 
@@ -186,11 +191,16 @@ export default class MainScene extends Phaser.Scene {
         // Disclaimer
         this.disclaimer = this.add.image(this.centerX, this.gameHeight - 20 * this.scaleFactor, "disclaimer")
             .setScale(this.scaleFactor);
+
     }
 
     // Create CTA tween for SC
     createCTATweenSC() {
         this.cta.createCTATween('SC');
+
+        // Create confetti emitter (optional)
+        // use: this.particleFactory.createConfettiEmitter(x, y, amount, lifespan, speedMin, speedMax)
+        this.particleFactory.createConfettiEmitter(this.cta.ctaButton.x, this.cta.ctaButton.y, 12, 2500, 50, 350);
     }
 
     // Create tutorial message

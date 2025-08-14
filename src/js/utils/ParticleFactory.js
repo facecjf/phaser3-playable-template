@@ -115,6 +115,79 @@ export default class ParticleFactory {
             this.boundsEmitter = null;
         }
     }
-    
+
+    // Create emitter object area
+    createAreaEmitter(texture, object, blendMode, particleDuration) {
+        const randomX = Phaser.Math.Between(object.x - object.displayWidth/2, object.x + object.displayWidth/2);
+        const randomY = Phaser.Math.Between((object.y - object.displayHeight/2), (object.y + object.displayHeight/2));
+        
+        this.areaEmitter = this.scene.add.image(randomX, randomY, texture)
+            .setDepth(30)
+            .setAlpha(1)
+            .setBlendMode(blendMode)
+            .setScale(1 * this.scene.scaleFactor);
+
+        this.areaEmitterTween = this.scene.tweens.add({
+            targets: this.areaEmitter,
+            alpha: 0,
+            scale: 0.15 * this.scene.scaleFactor,
+            x: randomX,
+            y: randomY,
+            rotation: 1,
+            duration: particleDuration,
+            ease: 'quad.inout',
+            yoyo: false,
+            onComplete: () => {
+                this.stopAreaEmitter();
+                this.createAreaEmitter(texture, object, blendMode, particleDuration);
+            }
+        });
+    }
+
+    // Stop and destroy area emitter
+    stopAreaEmitter() {
+        if (this.areaEmitter) {
+            this.areaEmitter.destroy();
+            this.areaEmitter = null;
+        }
+    }
+
+    // create confetti
+    createConfettiEmitter(x, y, amount, lifespan, speedMin, speedMax) {
+        this.confettiFrames = [ 
+            'c1.png', 
+            'c2.png', 
+            'c3.png', 
+            'c4.png', 
+            'c5.png', 
+            'c6.png', 
+            'c7.png', 
+            'c8.png', 
+            'c9.png', 
+        ];
+        
+        // Create the particle emitter
+        this.confettiEmitter = this.scene.add.particles(0, 0, 'confetti', {
+            frame: this.confettiFrames,
+            x: x,
+            y: y,
+            lifespan: lifespan,
+            speed: { min: speedMin * this.scene.scaleFactor, max: speedMax * this.scene.scaleFactor },
+            scale: 1 * this.scene.scaleFactor,
+            gravityY: 150 * this.scene.scaleFactor,
+            gravityYDelay: 750 * this.scene.scaleFactor,
+            gravityYSpeed: 50 * this.scene.scaleFactor,
+            alpha: { start: 1, end: 0 },
+            // angle: { min: -100, max: -80 },
+            rotate: { min: 0, max: 360 },
+            emitting: false,
+        });
+        
+        // Set depth so confetti appears above game elements
+        this.confettiEmitter.setDepth(22);
+        // Explode confetti
+        this.confettiEmitter.explode(amount);
+    }
+
     // ADD NEW PARTICLE EMITTERS HERE //
 }

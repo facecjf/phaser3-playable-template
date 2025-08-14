@@ -16,7 +16,7 @@ export default class PreloaderScene extends Phaser.Scene {
         console.log('%cSCENE::Preload Start', 'color: #fff; background: #ff1462;')
         
         const audioFiles = {
-            sound_fx: require('../audio/sound_fx.mp3')
+            //sound_fx: require('../audio/sound_fx.mp3')
         };
         
         const textureFiles = {
@@ -28,14 +28,15 @@ export default class PreloaderScene extends Phaser.Scene {
             legal: require('../img/legal.png'),
             disclaimer: require('../img/disclaimer.png'),
             tutbg: require('../img/tutbg.png'),
-            ember: require('../img/ember.png')
+            ember: require('../img/ember.png'),
+            sparkle: require('../img/sparkle.png'),
         };
 
         const atlasFiles = {
-            // gameAtlas: {
-            //     png: require('../img/game_atlas.png'),
-            //     json: require('../img/game_atlas.json')
-            // }
+            confetti: {
+                png: require('../img/confetti.png'),
+                json: require('../img/confetti.json')
+            }
         };
 
         const spritesheetFiles = {
