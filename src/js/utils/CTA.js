@@ -56,6 +56,9 @@ export default class CTA {
                 ease: 'quad.inout',
                 onUpdate: () => {
                     this.updateCTATextPosition();
+                },
+                onComplete: () => {
+                    this.scene.carousel.scrollToNext();
                 }
             });
         } else {

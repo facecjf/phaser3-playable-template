@@ -4,6 +4,7 @@ import * as ResponsiveSettings from './utils/ResponsiveSettings';
 import * as CTA from './utils/CTA';
 import * as UIHand from './utils/UIHand';
 import * as ParticleFactory from './utils/ParticleFactory';
+import * as Carousel from './utils/Carousel';
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
@@ -74,6 +75,9 @@ export default class MainScene extends Phaser.Scene {
         this.uiHand = new UIHand.default(this);
         // Initialize particle factory
         this.particleFactory = new ParticleFactory.default(this);
+        // Initialize carousel
+        this.carousel = new Carousel.default(this);
+
         // Create game objects
         this.createGameObjects();
         // Setup event listeners
@@ -148,10 +152,20 @@ export default class MainScene extends Phaser.Scene {
         // Start Tut Tween
         this.startTutTextTween();
 
+        // Create carousel
+        this.carousel.createCarousel(this.centerX, this.centerY, 600 * this.scaleFactor);
+        // Start auto-scrolling
+        //this.carousel.startScrolling();
+        // Show debug bounds
+        this.carousel.showDebugBounds();
+        // Center item by index
+        this.carousel.centerItemByIndex(2);
+
         // Create area emitter (optional)
         // use: this.particleFactory.createAreaEmitter(texture, object, blendMode, particleDuration)
         this.particleFactory.createAreaEmitter('sparkle', this.logo, 'ADD', 1000);
         
+
 
         // ADD CALLS TO NEW GAME METHODS HERE //
     }
@@ -440,7 +454,10 @@ export default class MainScene extends Phaser.Scene {
 
         // create ember emitter
         this.particleFactory.createEmberEmitter('ember');
-        
+
+        // update carousel position
+        this.carousel.updateCarouselPosition(this.centerX, this.centerY);
+
         // Resume the scene after resizing
         this.scene.resume();
 

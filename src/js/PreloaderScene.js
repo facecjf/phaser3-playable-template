@@ -30,6 +30,11 @@ export default class PreloaderScene extends Phaser.Scene {
             tutbg: require('../img/tutbg.png'),
             ember: require('../img/ember.png'),
             sparkle: require('../img/sparkle.png'),
+            item_01: require('../img/item_01.png'),
+            item_02: require('../img/item_02.png'),
+            item_03: require('../img/item_03.png'),
+            item_04: require('../img/item_04.png'),
+            item_05: require('../img/item_05.png')
         };
 
         const atlasFiles = {
