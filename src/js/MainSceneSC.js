@@ -154,11 +154,13 @@ export default class MainScene extends Phaser.Scene {
 
         // Create carousel
         this.carousel.createCarousel(this.centerX, this.centerY, 600 * this.scaleFactor);
-        // Start auto-scrolling
+        // Start auto-scrolling (optional)
         //this.carousel.startScrolling();
-        // Show debug bounds
-        this.carousel.showDebugBounds();
-        // Center item by index
+
+        // Show debug bounds (optional)
+        //this.carousel.showDebugBounds();
+
+        // Center item by index (optional)
         this.carousel.centerItemByIndex(2);
 
         // Create area emitter (optional)
