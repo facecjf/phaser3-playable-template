@@ -23,7 +23,7 @@ export default class Carousel {
         // Alpha settings for different positions
         this.centerAlpha = 1; // Alpha for centered item
         this.middleAlpha = 0.65; // Alpha for middle items
-        this.sideAlpha = 0.25; // Alpha for side items
+        this.sideAlpha = 0; // Alpha for side items
         
         // Carousel bounds
         this.carouselWidth = 600 * this.scaleFactor; // Custom carousel width for wrapping
@@ -295,6 +295,19 @@ export default class Carousel {
                 this.scrollTween = null;
             }
         });
+    }
+
+     // scroll carousel
+     createScrollCarousel(delay) {
+        this.scrollCarousel = this.scene.time.addEvent({
+            delay: delay, 
+            callback: () => {
+                this.scrollToNext();
+            },
+            repeat: -1,
+            loop: true
+        });
+        console.log('Scroll carousel created');
     }
     
     // Manual scroll to previous item

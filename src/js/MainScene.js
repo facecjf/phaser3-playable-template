@@ -4,6 +4,7 @@ import * as ResponsiveSettings from './utils/ResponsiveSettings';
 import * as CTA from './utils/CTA';
 import * as UIHand from './utils/UIHand';
 import * as ParticleFactory from './utils/ParticleFactory';
+import * as Carousel from './utils/Carousel';
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
@@ -25,6 +26,9 @@ export default class MainScene extends Phaser.Scene {
         this.inactivityEvent = null;
         this.logoScale = 0.45; // starting logo scale
         this.ctaScale = 0.45; // starting cta scale
+
+        // carousel settings
+        this.useCarousel = false; // use carousel
 
         // Delta time handling
         this.targetFPS = 60;
@@ -73,6 +77,10 @@ export default class MainScene extends Phaser.Scene {
         this.uiHand = new UIHand.default(this);
         // Initialize particle factory
         this.particleFactory = new ParticleFactory.default(this);
+        // Initialize carousel
+        if(this.useCarousel) {
+            this.carousel = new Carousel.default(this);
+        }
         // Create game objects
         this.createGameObjects();
         // Setup event listeners
@@ -151,6 +159,23 @@ export default class MainScene extends Phaser.Scene {
  
         // Start Tut Tween
         this.startTutTextTween();
+
+         // Create carousel
+         if(this.useCarousel) {
+            this.carousel.createCarousel(this.centerX, this.centerY, 600 * this.scaleFactor);
+        
+            // Start auto-scrolling (optional)
+            //this.carousel.startScrolling();
+
+            // Show debug bounds (optional)
+            this.carousel.showDebugBounds();
+
+            // Center item by index (optional)
+            this.carousel.centerItemByIndex(2);
+
+            // Create scroll carousel
+            this.carousel.createScrollCarousel(1000);
+        }
 
         // ADD CALLS TO NEW GAME METHODS HERE //
     }
@@ -432,6 +457,11 @@ export default class MainScene extends Phaser.Scene {
 
         // create ember emitter
         this.particleFactory.createEmberEmitter('ember');
+
+        // update carousel position
+        if(this.useCarousel) {
+            this.carousel.updateCarouselPosition(this.centerX, this.centerY);
+        }
         
         // Resume the scene after resizing
         this.scene.resume();
