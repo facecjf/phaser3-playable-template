@@ -116,6 +116,7 @@ export default class ParticleFactory {
         }
     }
 
+    // AREA EMITTER //////////////////////////////////////////////////////////////
     // Create emitter object area
     createAreaEmitter(texture, object, blendMode, particleDuration) {
         const randomX = Phaser.Math.Between(object.x - object.displayWidth/2, object.x + object.displayWidth/2);
@@ -152,6 +153,7 @@ export default class ParticleFactory {
         }
     }
 
+    // CONFETTI EMITTER //////////////////////////////////////////////////////////////
     // create confetti
     createConfettiEmitter(x, y, amount, lifespan, speedMin, speedMax) {
         this.confettiFrames = [ 

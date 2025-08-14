@@ -6,13 +6,14 @@ export default class CTA {
         this.ctaTween = null;
         this.ctaButtonScale = this.scene.ctaScale;
 
-        this.CTATextSize = 72;
         if (this.scene.currentLanguage === 'es') {
             this.CTATextSize = 56;
         } else if(this.scene.currentLanguage === 'fr') {
             this.CTATextSize = 56; 
         } else if(this.scene.currentLanguage === 'jp') {
             this.CTATextSize = 56;
+        } else {
+            this.CTATextSize = 72;
         }
         // Load language data from cache
         this.languageData = this.scene.cache.json.get('languages');
@@ -47,8 +48,8 @@ export default class CTA {
             // Create a new tween
             this.ctaTween = this.scene.tweens.add({
                 targets: this.ctaButton,
-                scaleX: '-=0.2',
-                scaleY: '-=0.2',
+                scaleX: 0.8 * this.scene.scaleFactor,
+                scaleY: 0.8 * this.scene.scaleFactor,
                 duration: 200,
                 yoyo: true,
                 repeat: 0,
@@ -61,8 +62,8 @@ export default class CTA {
             // Create a new tween
             this.ctaTween = this.scene.tweens.add({
                 targets: this.ctaButton,
-                scaleX: '+=0.1',
-                scaleY: '+=0.1',
+                scaleX: 0.9 * this.scene.scaleFactor,
+                scaleY: 0.9 * this.scene.scaleFactor,
                 duration: 500,
                 yoyo: true,
                 repeat: -1,

@@ -76,7 +76,7 @@ export default class UIHand {
                 targets: uiHand,
                 x: this.uiHandEndX,
                 y: this.uiHandEndY,
-                scale: '-=0.25',
+                scale: 0.8 * this.scene.scaleFactor,
                 ease: 'quad.inout',
                 duration: 750,
                 repeat: -1,

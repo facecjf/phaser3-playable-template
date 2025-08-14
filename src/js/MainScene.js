@@ -81,7 +81,8 @@ export default class MainScene extends Phaser.Scene {
         this.adNetworkManager.loadedGameAd();
         // Initialize Audio
         // e.g. this.audioFile = this.sound.add('audioFile', { loop: false, volume: 1.5 });
-         // Make scene globally accessible for MRAID audio control
+
+        // Make scene globally accessible for MRAID audio control
         window.gameScene = this;
         
         // Apply initial audio state if it was set before game initialized

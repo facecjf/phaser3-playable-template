@@ -82,7 +82,8 @@ export default class MainScene extends Phaser.Scene {
         this.adNetworkManager.loadedGameAd();
         // Initialize Audio
         // e.g. this.audioFile = this.sound.add('audioFile', { loop: false, volume: 1.5 });
-         // Make scene globally accessible for MRAID audio control
+
+        // Make scene globally accessible for MRAID audio control
         window.gameScene = this;
         
         // Apply initial audio state if it was set before game initialized
@@ -174,7 +175,7 @@ export default class MainScene extends Phaser.Scene {
             .setOrigin(0.5, 0.5);
 
         // CTA
-        const ctaY = this.isPortrait ? 200 * this.scaleFactor : 150 * this.scaleFactor;   
+        const ctaY = this.isPortrait ? 300 * this.scaleFactor : 200 * this.scaleFactor;   
         this.cta = new CTA.default(this);
         this.cta.createCTA(this.centerX, (this.centerY + ctaY));
         this.cta.ctaButton.setScale(this.ctaScale * this.scaleFactor);
@@ -497,9 +498,9 @@ export default class MainScene extends Phaser.Scene {
         this.logo.setScale(1 * this.scaleFactor);
 
         // CTA
-        const ctaY = this.isPortrait ? 200 * this.scaleFactor : 150 * this.scaleFactor;   
-        this.cta.ctaButton.setPosition(this.centerX, (this.gameHeight - ctaY));
-        this.cta.ctaButton.setScale(0.85 * this.scaleFactor);
+        const ctaY = this.isPortrait ? 300 * this.scaleFactor : 200 * this.scaleFactor; 
+        this.cta.ctaButton.setPosition(this.centerX, (this.centerY + ctaY));
+        this.cta.ctaButton.setScale(this.ctaScale * this.scaleFactor);
         this.cta.updateCTATextPosition();
 
         // Tutorial text
@@ -515,14 +516,11 @@ export default class MainScene extends Phaser.Scene {
         } else {
             this.tutText.setScale(this.tutTextBaseScale);
         }
-        // Update UI hand positions relative to new dimensions
-        const handOffsetX = 120 * this.scaleFactor;
-        const handOffsetY = 120 * this.scaleFactor;
-        
-        this.uiHand.uiHandStartX = this.centerX - handOffsetX;
-        this.uiHand.uiHandStartY = this.centerY + handOffsetY;
-        this.uiHand.uiHandEndX = this.centerX + handOffsetX;
-        this.uiHand.uiHandEndY = this.centerY + handOffsetY;
+
+        this.uiHand.uiHandStartX = this.cta.ctaButton.x - 50 * this.scaleFactor;
+        this.uiHand.uiHandStartY = this.cta.ctaButton.y + 60 * this.scaleFactor;
+        this.uiHand.uiHandEndX = this.cta.ctaButton.x;
+        this.uiHand.uiHandEndY = this.cta.ctaButton.y + 80 * this.scaleFactor;
 
         // If the UI hand controller exists, update its position
         if (this.uiHand.uiHandController) {
