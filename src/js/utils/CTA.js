@@ -58,7 +58,9 @@ export default class CTA {
                     this.updateCTATextPosition();
                 },
                 onComplete: () => {
-                    this.scene.carousel.scrollToNext();
+                    if(this.scene.useCarousel) {
+                        this.scene.carousel.scrollToNext();
+                    }
                 }
             });
         } else {

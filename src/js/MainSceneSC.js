@@ -27,6 +27,9 @@ export default class MainScene extends Phaser.Scene {
         this.logoScale = 1; // starting logo scale
         this.ctaScale = 1; // starting cta scale
 
+        // carousel settings
+        this.useCarousel = false; // use carousel
+
         // Delta time handling
         this.targetFPS = 60;
         this.deltaMultiplier = 1;
@@ -76,7 +79,9 @@ export default class MainScene extends Phaser.Scene {
         // Initialize particle factory
         this.particleFactory = new ParticleFactory.default(this);
         // Initialize carousel
-        this.carousel = new Carousel.default(this);
+        if(this.useCarousel) {
+            this.carousel = new Carousel.default(this);
+        }
 
         // Create game objects
         this.createGameObjects();
@@ -153,16 +158,18 @@ export default class MainScene extends Phaser.Scene {
         this.startTutTextTween();
 
         // Create carousel
-        this.carousel.createCarousel(this.centerX, this.centerY, 600 * this.scaleFactor);
-        // Start auto-scrolling (optional)
-        //this.carousel.startScrolling();
+        if(this.useCarousel) {
+            this.carousel.createCarousel(this.centerX, this.centerY, 600 * this.scaleFactor);
+        
+            // Start auto-scrolling (optional)
+            this.carousel.startScrolling();
 
-        // Show debug bounds (optional)
-        //this.carousel.showDebugBounds();
+            // Show debug bounds (optional)
+            this.carousel.showDebugBounds();
 
-        // Center item by index (optional)
-        this.carousel.centerItemByIndex(2);
-
+            // Center item by index (optional)
+            this.carousel.centerItemByIndex(2);
+        }
         // Create area emitter (optional)
         // use: this.particleFactory.createAreaEmitter(texture, object, blendMode, particleDuration)
         this.particleFactory.createAreaEmitter('sparkle', this.logo, 'ADD', 1000);
@@ -458,7 +465,9 @@ export default class MainScene extends Phaser.Scene {
         this.particleFactory.createEmberEmitter('ember');
 
         // update carousel position
-        this.carousel.updateCarouselPosition(this.centerX, this.centerY);
+        if(this.useCarousel) {
+            this.carousel.updateCarouselPosition(this.centerX, this.centerY);
+        }
 
         // Resume the scene after resizing
         this.scene.resume();
@@ -512,7 +521,7 @@ export default class MainScene extends Phaser.Scene {
 
     // Reposition regular game assets
     repositionGameAssets() {
-        const logoY = this.isPortrait ? 150 * this.scaleFactor : 150 * this.scaleFactor;
+        const logoY = this.isPortrait ? 150 * this.scaleFactor : 150 * this.scaleFactor; 
         this.logo.setPosition(this.centerX, logoY);
         this.logo.setScale(1 * this.scaleFactor);
 
