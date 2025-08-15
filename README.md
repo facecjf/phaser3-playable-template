@@ -45,7 +45,7 @@ git clone https://github.com/facecjf/phaser3-playable-template.git
 ```
 Make sure you are in the project, if not then go there:
 ```bash
-cd p3-webpack-playable-template
+cd phaser3-playable-template
 ```
 Now you need to install all the necessary dependencies for the project to work:
 ```bash
