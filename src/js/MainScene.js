@@ -173,8 +173,8 @@ export default class MainScene extends Phaser.Scene {
             // Center item by index (optional)
             this.carousel.centerItemByIndex(2);
 
-            // Create scroll carousel
-            this.carousel.createScrollCarousel(1000);
+            // Timed scroll carousel
+            this.carousel.timedScrollCarousel(2000);
         }
 
         // ADD CALLS TO NEW GAME METHODS HERE //

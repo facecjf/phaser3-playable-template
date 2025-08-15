@@ -278,7 +278,7 @@ export default class Carousel {
         }
     }
     
-    // Manual scroll to next item
+    // Manual scroll to next item : LEFT
     scrollToNext() {
         if (this.scrollTween && this.scrollTween.isPlaying()) return;
         
@@ -297,8 +297,8 @@ export default class Carousel {
         });
     }
 
-     // scroll carousel
-     createScrollCarousel(delay) {
+    // scroll carousel : TIMED SCROLL
+    timedScrollCarousel(delay) {
         this.scrollCarousel = this.scene.time.addEvent({
             delay: delay, 
             callback: () => {
@@ -310,7 +310,7 @@ export default class Carousel {
         console.log('Scroll carousel created');
     }
     
-    // Manual scroll to previous item
+    // Manual scroll to previous item : RIGHT
     scrollToPrevious() {
         if (this.scrollTween && this.scrollTween.isPlaying()) return;
         
