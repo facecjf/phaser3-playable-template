@@ -22,7 +22,7 @@ export default class Carousel {
         
         // Alpha settings for different positions
         this.centerAlpha = 1; // Alpha for centered item
-        this.middleAlpha = 0.65; // Alpha for middle items
+        this.middleAlpha = 0.65; // Alpha for middle items (between center and side)
         this.sideAlpha = 0; // Alpha for side items
         
         // Carousel bounds

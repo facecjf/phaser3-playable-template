@@ -256,13 +256,13 @@ export default class MainScene extends Phaser.Scene {
         // Handle CTA button click
         if (!this.ctaClicked && !this.gameOver) {
             this.ctaClicked = true;
-            this.endGameAd();
-            this.clickCTA();
+            this.adNetworkManager.endGameAd();
+            this.gameClickCTA();
         }
     }
 
     // Handle CTA click
-    clickCTA() {
+    gameClickCTA() {
         // Actions to perform when CTA is clicked
         this.adNetworkManager.clickCTA();
         // Add any additional CTA click logic here
@@ -308,7 +308,7 @@ export default class MainScene extends Phaser.Scene {
         if (this.gameOver && this.gamePhase > 2) {
             if (!this.ctaClicked) {
                 this.ctaClicked = true;
-                this.clickCTA();
+                this.gameClickCTA();
             }
         } else if (!this.firstClick && !this.gameOver) {
             this.firstClick = true;
@@ -672,18 +672,6 @@ export default class MainScene extends Phaser.Scene {
         this.tutText.setVisible(false);
     }
 
-    // End game ad
-    endGameAd() {
-        // Notify ad network that game ad is ending
-        this.adNetworkManager.endGameAd();
-    }
-
-    // Start game ad
-    startGameAd() {
-        // Notify ad network that game ad is starting
-        this.adNetworkManager.startGameAd();
-    }
-
     // Get localized text based on current language
     getLocalizedText(key) {
         if (this.languageData && this.languageData[this.currentLanguage] && this.languageData[this.currentLanguage][key]) {
@@ -729,7 +717,7 @@ export default class MainScene extends Phaser.Scene {
         // Main Game Update Loop - Used for setting game phases
         if (this.gamePhase == 0 && !this.gameOver) {
             // Notify ad network that game ad is starting
-            this.startGameAd();
+            this.adNetworkManager.startGameAd();
             console.log('%c>Phase 1 Tutorial', 'color: #FFF; background: #ab24f8;');
             this.gamePhase++;
         } else if (this.gamePhase == 1 && !this.gameOver) {
@@ -740,7 +728,7 @@ export default class MainScene extends Phaser.Scene {
             }
         } else if (this.gamePhase == 2 && this.gameOver) {
             // Notify ad network that game ad is ending
-            this.endGameAd();
+            this.adNetworkManager.endGameAd();
             console.log('%c>Phase 3 Game Over EM', 'color: #FFF; background: #ab24f8;');
             this.gamePhase++;
         } else if (this.gamePhase == 3 && this.gameOver) {

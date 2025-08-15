@@ -80,6 +80,7 @@ export default class CTA {
 
         }
     }
+    
 
     // update CTA text position
     updateCTATextPosition() {
