@@ -573,7 +573,6 @@ export default class MainScene extends Phaser.Scene {
             this.gamePhase++;
             this.firstClick = true;
         }
-        console.log(this.gamePhase);
 
     }
 
@@ -625,21 +624,25 @@ export default class MainScene extends Phaser.Scene {
             this.adNetworkManager.startGameAd();
             console.log('%c>Phase 1 Tutorial', 'color: #FFF; background: #ab24f8;');
             this.gamePhase++;
+            console.log('Game Phase: ', this.gamePhase);
         } else if (this.gamePhase == 1 && !this.gameOver) {
             if (this.firstClick) {
                 console.log('%c>Phase 2 Start', 'color: #FFF; background: #ab24f8;');
                 this.startGame = true;
                 this.gamePhase++;
+                console.log('Game Phase: ', this.gamePhase);
             }
         } else if (this.gamePhase == 2 && this.gameOver) {
             // Notify ad network that game ad is ending
             this.adNetworkManager.endGameAd();
             console.log('%c>Phase 3 Game Over EM', 'color: #FFF; background: #ab24f8;');
             this.gamePhase++;
+            console.log('Game Phase: ', this.gamePhase);
         } else if (this.gamePhase == 3 && this.gameOver) {
             if (this.ctaClicked) {
                 console.log('%c>Phase 4 Return Modual', 'color: #FFF; background: #ab24f8;');
                 this.gamePhase++;
+                console.log('Game Phase: ', this.gamePhase);
             }
         }
         // Store the current frame time for next frame's delta calculation
