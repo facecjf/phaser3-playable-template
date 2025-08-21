@@ -48,8 +48,8 @@ export default class CTA {
             // Create a new tween
             this.ctaTween = this.scene.tweens.add({
                 targets: this.ctaButton,
-                scaleX: 0.8 * this.scene.scaleFactor,
-                scaleY: 0.8 * this.scene.scaleFactor,
+                scaleX: '-=0.1',
+                scaleY: '-=0.1',
                 duration: 200,
                 yoyo: true,
                 repeat: 0,
@@ -67,8 +67,8 @@ export default class CTA {
             // Create a new tween
             this.ctaTween = this.scene.tweens.add({
                 targets: this.ctaButton,
-                scaleX: 0.9 * this.scene.scaleFactor,
-                scaleY: 0.9 * this.scene.scaleFactor,
+                scaleX: '-=0.1',
+                scaleY: '-=0.1',
                 duration: 500,
                 yoyo: true,
                 repeat: -1,

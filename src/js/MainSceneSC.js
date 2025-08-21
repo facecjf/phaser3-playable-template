@@ -170,6 +170,7 @@ export default class MainScene extends Phaser.Scene {
             // Center item by index (optional)
             this.carousel.centerItemByIndex(2);
         }
+
         // Create area emitter (optional)
         // use: this.particleFactory.createAreaEmitter(texture, object, blendMode, particleDuration)
         this.particleFactory.createAreaEmitter('sparkle', this.logo, 'ADD', 1000);
@@ -188,20 +189,23 @@ export default class MainScene extends Phaser.Scene {
 
     //// ADD NEW GAME METHODS HERE ////
 
-
     // create UI elements
     setupUI() {
         // Logo
-        const logoY = this.isPortrait ? 150 * this.scaleFactor : 150 * this.scaleFactor;
-        this.logo = this.add.image(this.centerX, logoY, "logo")
-            .setScale(this.logoScale * this.scaleFactor)
+        const logoScale = this.isPortrait ? this.logoScale * this.scaleFactor : 0.7 * this.scaleFactor;
+        const logoY = this.isPortrait ? 150 * this.scaleFactor : 100 * this.scaleFactor;
+        const logoX = this.isPortrait ? this.centerX : 200 * this.scaleFactor;
+        this.logo = this.add.image(logoX, logoY, "logo")
+            .setScale(logoScale)
             .setOrigin(0.5, 0.5);
 
         // CTA
-        const ctaY = this.isPortrait ? 300 * this.scaleFactor : 200 * this.scaleFactor;   
+        const ctaScale = this.isPortrait ? this.ctaScale * this.scaleFactor : 0.9 * this.scaleFactor;
+        const ctaY = this.isPortrait ? 300 * this.scaleFactor : 200 * this.scaleFactor; 
+        const ctaX = this.isPortrait ? this.centerX : this.centerX;
         this.cta = new CTA.default(this);
-        this.cta.createCTA(this.centerX, (this.centerY + ctaY));
-        this.cta.ctaButton.setScale(this.ctaScale * this.scaleFactor);
+        this.cta.createCTA(ctaX, (this.centerY + ctaY));
+        this.cta.ctaButton.setScale(ctaScale);
         this.cta.ctaButton.setOrigin(0.5, 0.5);
         this.cta.createCTAText();
         
@@ -516,14 +520,18 @@ export default class MainScene extends Phaser.Scene {
 
     // Reposition regular game assets
     repositionGameAssets() {
-        const logoY = this.isPortrait ? 150 * this.scaleFactor : 150 * this.scaleFactor; 
-        this.logo.setPosition(this.centerX, logoY);
-        this.logo.setScale(1 * this.scaleFactor);
+        const logoScale = this.isPortrait ? this.logoScale * this.scaleFactor : 0.7 * this.scaleFactor;
+        const logoY = this.isPortrait ? 150 * this.scaleFactor : 100 * this.scaleFactor;
+        const logoX = this.isPortrait ? this.centerX : 200 * this.scaleFactor;
+        this.logo.setPosition(logoX, logoY);
+        this.logo.setScale(logoScale);
 
         // CTA
+        const ctaScale = this.isPortrait ? this.ctaScale * this.scaleFactor : 0.9 * this.scaleFactor;
         const ctaY = this.isPortrait ? 300 * this.scaleFactor : 200 * this.scaleFactor; 
-        this.cta.ctaButton.setPosition(this.centerX, (this.centerY + ctaY));
-        this.cta.ctaButton.setScale(this.ctaScale * this.scaleFactor);
+        const ctaX = this.isPortrait ? this.centerX : this.centerX; 
+        this.cta.ctaButton.setPosition(ctaX, (this.centerY + ctaY));
+        this.cta.ctaButton.setScale(ctaScale);
         this.cta.updateCTATextPosition();
 
         // Tutorial text

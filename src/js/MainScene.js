@@ -81,6 +81,7 @@ export default class MainScene extends Phaser.Scene {
         if(this.useCarousel) {
             this.carousel = new Carousel.default(this);
         }
+        
         // Create game objects
         this.createGameObjects();
         // Setup event listeners
