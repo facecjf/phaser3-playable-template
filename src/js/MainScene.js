@@ -71,18 +71,17 @@ export default class MainScene extends Phaser.Scene {
         this.initializeDeltaTimeHandling();
         // Initialize game camera
         this.gameCamera = this.cameras.main;
-        // Initialize game components
+        // Initialize game components (optional)
         this.initializeGameVariables();
         // Initialize UI hand
         this.uiHand = new UIHand.default(this);
         // Initialize particle factory
         this.particleFactory = new ParticleFactory.default(this);
-        // Initialize carousel
+        // Initialize carousel (optional)
         if(this.useCarousel) {
             this.carousel = new Carousel.default(this);
         }
-        
-        // Create game objects
+        // Create game objects - Main Game Objects
         this.createGameObjects();
         // Setup event listeners
         this.setupEventListeners();
