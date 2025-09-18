@@ -14,6 +14,7 @@ const allAdNetworks = [
     'adikteev',
     'applovin',
     'bigabid',
+    'chartboost',
     'facebook',
     'google',
     'ironsource',
@@ -25,7 +26,6 @@ const allAdNetworks = [
     'tiktok',
     'unity',
     'vungle'
-    //'chartboost'
 ];
 
 const buildDir = path.join(__dirname, 'dist');
