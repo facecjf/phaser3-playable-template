@@ -60,9 +60,9 @@ export default class MainScene extends Phaser.Scene {
         if (!this.languageData) {
             console.warn('Language data not loaded. Using fallback.');
             this.languageData = {
-                en: {
-                    play_now: '!!PLAY NOW!!',
-                    game_tut: '!!TUTORIAL MSG!!'
+                "en-us": {
+                    "play_now": "Play Now",
+                    "game_tut": 'Tutorial Message!'
                     // ... other fallback texts ...
                 }
             };
