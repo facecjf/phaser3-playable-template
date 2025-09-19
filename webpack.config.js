@@ -26,7 +26,7 @@ module.exports = (env, argv) => {
           }
         },
         {
-          test: /\.(gif|png|jpe?g|svg|mp3|m4a|ogg|wav|json|xml$)$/i,
+          test: /\.(gif|png|jpe?g|svg|mp3|m4a|ogg|wav|json|xml|woff|woff2|ttf|eot$)$/i,
           type: 'asset/inline'
         },
       ]
