@@ -29,7 +29,7 @@ export default class CTA {
         this.ctaButton.setPosition(x, y);
     }
 
-    // create CTA text
+    // create CTA text (bitmap)
     createCTAText() {
         this.ctaText = this.scene.add.bitmapText(this.ctaButton.x, this.ctaButton.y, 'gameFont', this.scene.getLocalizedText('play_now'), this.CTATextSize, 1)
             .setOrigin(0.5)
@@ -37,6 +37,15 @@ export default class CTA {
             .setDepth(21);
         this.updateCTATextPosition();
     }
+    
+    // create CTA text (web font)
+    // createCTAText() {
+    //     this.ctaText = this.scene.add.text(this.ctaButton.x, this.ctaButton.y, this.scene.getLocalizedText('play_now'), { fontFamily: 'CTAFont', fontSize: '40px', color: '#096a55' })
+    //         .setOrigin(0.5)
+    //         .setTint(0xFFFFFF)
+    //         .setDepth(21);
+    //     this.updateCTATextPosition();
+    // }
 
     // create CTA tween
     createCTATween(tweenType) {
