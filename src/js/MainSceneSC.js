@@ -174,7 +174,8 @@ export default class MainScene extends Phaser.Scene {
         // use: this.particleFactory.createAreaEmitter(texture, object, blendMode, particleDuration)
         this.particleFactory.createAreaEmitter('sparkle', this.logo, 'ADD', 1000);
         
-
+        this.testText = this.add.text(this.centerX, this.centerY, 'Hello', { fontFamily: 'speechFont', fontSize: '32px', color: '#ffffff' });
+        this.testText.setDepth(50);
 
         // ADD CALLS TO NEW GAME METHODS HERE //
     }
