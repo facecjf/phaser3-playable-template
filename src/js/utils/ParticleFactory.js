@@ -152,6 +152,43 @@ export default class ParticleFactory {
             this.areaEmitter = null;
         }
     }
+    // AREA EMITTER 2 //////////////////////////////////////////////////////////////
+    // Create area emitter 2
+    createAreaEmitter2(texture, object, blendMode, particleDuration, frequency, yOffset) {
+        this.areaEmitter2.push(this.scene.add.particles(0, object.y + yOffset, texture, {
+            speed: {min: 5, max: 50},
+            lifespan: 1500,
+            scale: {start: 0.25 * this.scene.scaleFactor, end: 0},
+            gravityY: 0,
+            blendMode: blendMode,
+            quantity: 1,
+            x: { min: object.x - object.displayWidth/2 * this.scene.scaleFactor, max: object.x + object.displayWidth/2 * this.scene.scaleFactor },
+            frequency: frequency,
+            advance: particleDuration,
+            emitCallback: (particle) => {
+                particle.velocityX *= this.scene.deltaMultiplier;
+                particle.velocityY *= this.scene.deltaMultiplier;
+            },
+            deathZone: {
+                type: 'onComplete',
+                source: object,
+                onComplete: () => {
+                    particle.stop();
+                }
+            },
+            
+        }));
+
+    }
+
+    // Stop and destroy area emitter 2
+    stopAreaEmitter2() {
+        for(let i = 0; i < this.areaEmitter2.length; i++) { if(this.areaEmitter2[i]) {
+                this.areaEmitter2[i].destroy();
+                this.areaEmitter2[i] = null;
+            }
+        }
+    }
 
     // CONFETTI EMITTER //////////////////////////////////////////////////////////////
     // create confetti
