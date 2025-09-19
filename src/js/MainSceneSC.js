@@ -236,7 +236,13 @@ export default class MainScene extends Phaser.Scene {
         const tutY = this.isPortrait ? this.centerY - 100 * this.scaleFactor : this.centerY - 100 * this.scaleFactor;
         
         // Add bitmap text to tutBG
-        this.tutText = this.add.bitmapText(this.centerX, tutY, 'gameFont', this.getLocalizedText('game_tut'), this.tutTextSize, 1)
+        // this.tutText = this.add.bitmapText(this.centerX, tutY, 'gameFont', this.getLocalizedText('game_tut'), this.tutTextSize, 1)
+        //     .setDepth(11)
+        //     .setOrigin(0.5)
+        //     .setTint(0xFFFFFF);
+
+        //Add web font text to tutBG
+        this.tutText = this.add.text(this.speechbubble.x, this.speechbubble.y - 22 * this.scaleFactor, this.getLocalizedText('game_tut'), { fontFamily: 'speechFont', fontSize: '32px', color: '#096a55' })
             .setDepth(11)
             .setOrigin(0.5)
             .setTint(0xFFFFFF);
