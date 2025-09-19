@@ -177,6 +177,9 @@ export default class MainScene extends Phaser.Scene {
             this.carousel.timedScrollCarousel(2000);
         }
 
+        this.testText = this.add.text(this.centerX, this.centerY, 'Hello', { fontFamily: 'speechFont', fontSize: '32px', color: '#ffffff' });
+        this.testText.setDepth(50);
+
         // ADD CALLS TO NEW GAME METHODS HERE //
     }
 
