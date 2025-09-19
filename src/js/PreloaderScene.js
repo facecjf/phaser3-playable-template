@@ -114,7 +114,7 @@ export default class PreloaderScene extends Phaser.Scene {
         preloadDiv.style.visibility = 'hidden';
         preloadDiv.innerHTML = `
             <span style="font-family: speechFont;">Loading font 1...</span>
-            <span style="font-family: secondFont;">Loading font 2...</span>
+            <span style="font-family: ctaFont;">Loading font 2...</span>
         `;
         document.body.appendChild(preloadDiv);
         
@@ -122,7 +122,7 @@ export default class PreloaderScene extends Phaser.Scene {
         if (document.fonts) {
             Promise.all([
                 document.fonts.load('1em speechFont'),
-                document.fonts.load('1em secondFont')
+                document.fonts.load('1em ctaFont')
             ]).then(() => {
                 this.fontsLoaded = true;
                 document.body.removeChild(preloadDiv);
