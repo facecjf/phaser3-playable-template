@@ -10,10 +10,13 @@ export default class PreloaderScene extends Phaser.Scene {
         this.allTextures = 0;
         this.countLoadedSpritesheets = 0;
         this.allSpritesheets = 0;
+        this.fontsLoaded = false;
     }
 
     preload() {
         console.log('%cSCENE::Preload Start', 'color: #fff; background: #ff1462;')
+        // web font use (optional)
+        this.loadWebFonts(); 
         
         const audioFiles = {
             //sound_fx: require('../audio/sound_fx.mp3')
@@ -66,6 +69,76 @@ export default class PreloaderScene extends Phaser.Scene {
         this.load.json('languages', require('../data/languages.json'));
 
         this.load.on('complete', this.onLoadComplete, this);
+    }
+
+    loadWebFonts() {
+        // Font 1: Speech Font
+        const CTAFontWoff2 = require('../font/BowlbyOneSC-Regular.woff2');
+        const CTAFontWoff = require('../font/BowlbyOneSC-Regular.woff');
+        const CTAFontTtf = require('../font/BowlbyOneSC-Regular.ttf');
+        
+        // Font 2: Your second font (update these paths)
+        const speechFontWoff2 = require('../font/FrancoisOne.woff2');
+        const speechFontWoff = require('../font/FrancoisOne.woff');
+        const speechFontTtf = require('../font/FrancoisOne.ttf');
+        
+        // Create style element for both fonts
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @font-face {
+                font-family: 'speechFont';
+                src: url('${speechFontWoff2}') format('woff2'),
+                     url('${speechFontWoff}') format('woff'),
+                     url('${speechFontTtf}') format('truetype');
+                font-weight: normal;
+                font-style: normal;
+                font-display: swap;
+            }
+            
+            @font-face {
+                font-family: 'ctaFont';
+                src: url('${CTAFontWoff2}') format('woff2'),
+                     url('${CTAFontWoff}') format('woff'),
+                     url('${CTAFontTtf}') format('truetype');
+                font-weight: normal;
+                font-style: normal;
+                font-display: swap;
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Preload both fonts
+        const preloadDiv = document.createElement('div');
+        preloadDiv.style.position = 'absolute';
+        preloadDiv.style.left = '-9999px';
+        preloadDiv.style.visibility = 'hidden';
+        preloadDiv.innerHTML = `
+            <span style="font-family: speechFont;">Loading font 1...</span>
+            <span style="font-family: secondFont;">Loading font 2...</span>
+        `;
+        document.body.appendChild(preloadDiv);
+        
+        // Load both fonts
+        if (document.fonts) {
+            Promise.all([
+                document.fonts.load('1em speechFont'),
+                document.fonts.load('1em secondFont')
+            ]).then(() => {
+                this.fontsLoaded = true;
+                document.body.removeChild(preloadDiv);
+                console.log('Both fonts loaded successfully');
+            }).catch((err) => {
+                console.warn('Font loading failed:', err);
+                this.fontsLoaded = true; // Continue anyway
+                document.body.removeChild(preloadDiv);
+            });
+        } else {
+            // Fallback for older browsers
+            setTimeout(() => {
+                this.fontsLoaded = true;
+                document.body.removeChild(preloadDiv);
+            }, 200);
+        }
     }
     
     addBitmapText(key, vPNG, vXML) {
@@ -132,7 +205,8 @@ export default class PreloaderScene extends Phaser.Scene {
         if (this.loadMain && 
             (this.countDecodedAudio >= this.allAudio) && 
             (this.countDecodedTexture >= this.allTextures) &&
-            (this.countLoadedSpritesheets >= this.allSpritesheets)) {
+            (this.countLoadedSpritesheets >= this.allSpritesheets) &&
+            this.fontsLoaded) {
             console.log('%cSCENE::Preload Complete', 'color: #fff; background: #ff1462;')
             console.log('%cSCENE::Loaded', 'color: #000; background: #0f0;');
             this.scene.start("Main");
