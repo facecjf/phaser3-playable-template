@@ -10,7 +10,7 @@ export default class MainScene extends Phaser.Scene {
     constructor() {
         super({ key: 'Main' }); // Set the scene key
         this.adNetworkManager = new AdNetworkManager.default(); // Initialize ad network manager
-        this.currentLanguage = 'ko-kr'; // Default language
+        this.currentLanguage = 'en-us'; // Default language
         //this.timeRemaining = 30; // Initial time for the countdown timer
         this.timerStarted = false; // Flag to check if timer has started
         this.tutTextTween = null; // Tween for tutorial text animation
