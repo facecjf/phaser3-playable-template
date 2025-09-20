@@ -229,7 +229,7 @@ export default class MainScene extends Phaser.Scene {
         //     .setTint(0xFFFFFF);
 
         //Add web font text to tutBG
-        this.tutText = this.add.text(this.centerX, tutY,, this.getLocalizedText('game_tut'), { fontFamily: 'speechFont', fontSize: '32px', color: '#096a55' })
+        this.tutText = this.add.text(this.centerX, tutY, this.getLocalizedText('game_tut'), { fontFamily: 'speechFont', fontSize: '32px', color: '#096a55' })
             .setDepth(11)
             .setOrigin(0.5)
             .setTint(0xFFFFFF);
