@@ -77,7 +77,7 @@ export default class MainScene extends Phaser.Scene {
         this.isLandscape = this.responsiveSettings.isLandscape;
         
         // Load language data from cache
-        this.languageData = this.cache.json.get('languages');
+        //this.languageData = this.cache.json.get('languages');
         
         // Fallback language data if not loaded
         if (!this.languageData) {
