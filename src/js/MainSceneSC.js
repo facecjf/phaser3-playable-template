@@ -35,6 +35,29 @@ export default class MainScene extends Phaser.Scene {
         this.deltaMultiplier = 1;
         this.lastFrameTime = 0;
 
+        // font size
+        if(this.currentLanguage === 'ja-jp') {
+            this.fontSize = '36px';
+        } else if(this.currentLanguage === 'ko-kr') {
+            this.fontSize = '48px';
+        }else if(this.currentLanguage === 'ru-ru') {
+            this.fontSize = '32px';
+        }else if(this.currentLanguage === 'es-es') {
+            this.fontSize = '48px';
+        }else if(this.currentLanguage === 'es-mx') {
+            this.fontSize = '48px';
+        }else if(this.currentLanguage === 'fr-fr') {
+            this.fontSize = '48px';
+        }else if(this.currentLanguage === 'it-it') {
+            this.fontSize = '48px';
+        }else if(this.currentLanguage === 'pt-br') {
+            this.fontSize = '48px';
+        }else if(this.currentLanguage === 'tr-tr') {
+            this.fontSize = '48px';
+        } else {
+            this.fontSize = '48px';
+        }
+
     }
 
     // Create the scene
@@ -242,7 +265,7 @@ export default class MainScene extends Phaser.Scene {
         //     .setTint(0xFFFFFF);
 
         //Add web font text to tutBG
-        this.tutText = this.add.text(this.speechbubble.x, this.speechbubble.y - 22 * this.scaleFactor, this.getLocalizedText('game_tut'), { fontFamily: 'speechFont', fontSize: '32px', color: '#096a55' })
+        this.tutText = this.add.text(this.speechbubble.x, this.speechbubble.y - 22 * this.scaleFactor, this.getLocalizedText('game_tut'), { fontFamily: 'speechFont', fontSize: this.fontSize, color: '#096a55' })
             .setDepth(11)
             .setOrigin(0.5)
             .setTint(0xFFFFFF);
