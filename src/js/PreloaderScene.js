@@ -66,7 +66,7 @@ export default class PreloaderScene extends Phaser.Scene {
         this.sound.on('decoded', this.incrementDecodedAudio, this);
 
         // Load the language JSON file
-        this.load.json('languages', require('../data/languages.json'));
+        //this.load.json('languages', require('../data/languages.json'));
 
         this.load.on('complete', this.onLoadComplete, this);
     }
