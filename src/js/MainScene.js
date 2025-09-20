@@ -10,7 +10,7 @@ export default class MainScene extends Phaser.Scene {
     constructor() {
         super({ key: 'Main' }); // Set the scene key
         this.adNetworkManager = new AdNetworkManager.default(); // Initialize ad network manager
-        this.currentLanguage = 'en-us'; // Default language
+        this.currentLanguage = 'ko-kr'; // Default language
         //this.timeRemaining = 30; // Initial time for the countdown timer
         this.timerStarted = false; // Flag to check if timer has started
         this.tutTextTween = null; // Tween for tutorial text animation
@@ -53,16 +53,51 @@ export default class MainScene extends Phaser.Scene {
         this.isLandscape = this.responsiveSettings.isLandscape;
         
         // Load language data from cache
-        this.languageData = this.cache.json.get('languages');
+        //this.languageData = this.cache.json.get('languages');
         
         // Fallback language data if not loaded
         if (!this.languageData) {
             console.warn('Language data not loaded. Using fallback.');
             this.languageData = {
                 "en-us": {
-                    "play_now": "Play Now",
-                    "game_tut": 'Tutorial Message!'
-                    // ... other fallback texts ...
+                    "play_now": "PLAY NOW",
+                    "game_tut": "TUTORIAL MESSAGE!"
+                },
+                "es-es": {
+                    "play_now": "JUEGA\nAHORA",
+                    "game_tut": "¡MENSAJE TUTORIAL!"
+                },
+                "es-mx": {
+                    "play_now": "JUEGA\nAHORA",
+                    "game_tut": "¡MENSAJE TUTORIAL!"
+                },
+                "fr-fr": {
+                    "play_now": "JOUER\nMAINTENANT",
+                    "game_tut": "MESSAGE DU TUTORIEL !"
+                },
+                "it-it": {
+                    "play_now": "GIOCA ORA",
+                    "game_tut": "MESSAGGIO DEL TUTORIAL!"
+                },
+                "pt-br": {
+                    "play_now": "JOGUE AGORA",
+                    "game_tut": "MENSAGEM DO TUTORIAL!"
+                },
+                "ru-ru": {
+                    "play_now": "ИГРАТЬ СЕЙЧАС",
+                    "game_tut": "ОБУЧАЮЩЕЕ СООБЩЕНИЕ!"
+                },
+                "tr-tr": {
+                    "play_now": "ŞİMDİ OYNA",
+                    "game_tut": "ÖĞRETICI MESAJ!"
+                },
+                "ja-jp": {
+                    "play_now": "今すぐプレイ",
+                    "game_tut": "チュートリアルメッセージ!"
+                },
+                "ko-kr": {
+                    "play_now": "지금 플레이",
+                    "game_tut": "튜토리얼 메시지!"
                 }
             };
         }
@@ -177,8 +212,8 @@ export default class MainScene extends Phaser.Scene {
             this.carousel.timedScrollCarousel(2000);
         }
 
-        this.testText = this.add.text(this.centerX, this.centerY, 'Hello', { fontFamily: 'speechFont', fontSize: '32px', color: '#ffffff' });
-        this.testText.setDepth(50);
+        // this.testText = this.add.text(this.centerX, this.centerY, 'Hello', { fontFamily: 'speechFont', fontSize: '32px', color: '#ffffff' });
+        // this.testText.setDepth(50);
 
         // ADD CALLS TO NEW GAME METHODS HERE //
     }
@@ -229,7 +264,7 @@ export default class MainScene extends Phaser.Scene {
         //     .setTint(0xFFFFFF);
 
         //Add web font text to tutBG
-        this.tutText = this.add.text(this.centerX, tutY, this.getLocalizedText('game_tut'), { fontFamily: 'speechFont', fontSize: '48px', color: '#FFFFFF' })
+        this.tutText = this.add.text(this.centerX, tutY, this.getLocalizedText('game_tut'), { fontFamily: 'jpFont', fontSize: '48px', color: '#FFFFFF' })
             .setDepth(11)
             .setOrigin(0.5)
             .setTint(0xFFFFFF);

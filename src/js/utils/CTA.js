@@ -40,7 +40,7 @@ export default class CTA {
     
     // create CTA text (web font)
     createCTAText() {
-        this.ctaText = this.scene.add.text(this.ctaButton.x, this.ctaButton.y, this.scene.getLocalizedText('play_now'), { fontFamily: 'CTAFont', fontSize: '40px', color: '#FFFFFF' })
+        this.ctaText = this.scene.add.text(this.ctaButton.x, this.ctaButton.y, this.scene.getLocalizedText('play_now'), { fontFamily: 'mainFont', fontSize: '42px', color: '#FFFFFF' })
             .setOrigin(0.5)
             .setTint(0xFFFFFF)
             .setDepth(21);
@@ -94,7 +94,7 @@ export default class CTA {
     updateCTATextPosition() {
         if (this.ctaText && this.ctaButton) {
             const ctaCenterX = this.ctaButton.x - (this.ctaButton.displayWidth * (-0.5 + this.ctaButton.originX));
-            this.ctaText.setPosition(ctaCenterX, this.ctaButton.y - 5 * this.scaleFactor);
+            this.ctaText.setPosition(ctaCenterX, this.ctaButton.y - 4 * this.scene.scaleFactor);
             this.ctaText.setScale(this.ctaButton.scale);
         }
     }

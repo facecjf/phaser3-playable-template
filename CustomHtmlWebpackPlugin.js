@@ -4,7 +4,7 @@ const path = require('path');
 class CustomHtmlWebpackPlugin {
   constructor(options) {
     this.templatePath = options.template;
-    this.filename = options.filename || 'index.html';
+    this.filename = options.filename || './src/index.html';
   }
 
   apply(compiler) {

@@ -15,9 +15,6 @@ const gameConfig = {
         mode: Phaser.Scale.RESIZE,
         autoCenter: Phaser.Scale.CENTER_BOTH,
     },
-    input: {
-        windowEvents: true  // Disable window-level events to avoid window.top usage
-    },
     // NOTE: Physics is not needed for this project
     // physics: {
     //     default: 'arcade',

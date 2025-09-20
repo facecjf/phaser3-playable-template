@@ -72,39 +72,31 @@ export default class PreloaderScene extends Phaser.Scene {
     }
 
     loadWebFonts() {
-        // Font 1: Speech Font
-        const CTAFontWoff2 = require('../font/BowlbyOneSC-Regular.woff2');
-        const CTAFontWoff = require('../font/BowlbyOneSC-Regular.woff');
-        const CTAFontTtf = require('../font/BowlbyOneSC-Regular.ttf');
-        
-        // Font 2: Your second font (update these paths)
-        const speechFontWoff2 = require('../font/FrancoisOne.woff2');
-        const speechFontWoff = require('../font/FrancoisOne.woff');
-        const speechFontTtf = require('../font/FrancoisOne.ttf');
+        // Font 1: English, RU, TR
+        const mainFontWoff2 = require('../font/Roboto.woff2');
+        const mainFontWoff = require('../font/Roboto.woff');
+        // Font 2: JP Font
+        // const jpFontWoff2 = require('../font/MurechoJP.woff2');
+        // const jpFontWoff = require('../font/MurechoJP.woff');
+        // Font 3: KO Font
+        // const koFontWoff2 = require('../font/OswaldKO.woff2');
+        // const koFontWoff = require('../font/OswaldKO.woff');  
+
         
         // Create style element for both fonts
         const style = document.createElement('style');
         style.innerHTML = `
             @font-face {
-                font-family: 'speechFont';
-                src: url('${speechFontWoff2}') format('woff2'),
-                     url('${speechFontWoff}') format('woff'),
-                     url('${speechFontTtf}') format('truetype');
+                font-family: 'mainFont';
+                src: url('${mainFontWoff2}') format('woff2'),
+                     url('${mainFontWoff}') format('woff')
                 font-weight: normal;
                 font-style: normal;
                 font-display: swap;
             }
             
-            @font-face {
-                font-family: 'ctaFont';
-                src: url('${CTAFontWoff2}') format('woff2'),
-                     url('${CTAFontWoff}') format('woff'),
-                     url('${CTAFontTtf}') format('truetype');
-                font-weight: normal;
-                font-style: normal;
-                font-display: swap;
-            }
         `;
+        // add more @font-face below @font-face
         document.head.appendChild(style);
         
         // Preload both fonts
@@ -113,16 +105,17 @@ export default class PreloaderScene extends Phaser.Scene {
         preloadDiv.style.left = '-9999px';
         preloadDiv.style.visibility = 'hidden';
         preloadDiv.innerHTML = `
-            <span style="font-family: speechFont;">Loading font 1...</span>
-            <span style="font-family: ctaFont;">Loading font 2...</span>
+            <span style="font-family: mainFont;">Loading font 1...</span>
         `;
+        // add more fonts below <span style="font-family: mainFont;">Loading font 1...</span>
         document.body.appendChild(preloadDiv);
         
         // Load both fonts
         if (document.fonts) {
             Promise.all([
-                document.fonts.load('1em speechFont'),
-                document.fonts.load('1em ctaFont')
+                document.fonts.load('1em mainFont')
+                // document.fonts.load('1em jpFont'),
+                // document.fonts.load('1em koFont')
             ]).then(() => {
                 this.fontsLoaded = true;
                 document.body.removeChild(preloadDiv);
