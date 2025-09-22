@@ -60,7 +60,7 @@ export default class PreloaderScene extends Phaser.Scene {
         Object.entries(spritesheetFiles).forEach(([key, {png, frameConfig}]) => this.addSpritesheet(key, png, frameConfig));
         
         // Add the game font
-        this.addBitmapText('gameFont', require('../font/templateFont_0.png'), require('../font/templateFont.xml'));
+        this.addBitmapText('gameFont', require('../font/gameFont.png'), require('../font/gameFont.xml'));
 
         this.textures.on('onload', this.incrementDecodedTexture, this);
         this.sound.on('decoded', this.incrementDecodedAudio, this);
