@@ -4,7 +4,6 @@ import * as ResponsiveSettings from './utils/ResponsiveSettings';
 import * as CTA from './utils/CTA';
 import * as UIHand from './utils/UIHand';
 import * as ParticleFactory from './utils/ParticleFactory';
-import * as Carousel from './utils/Carousel';
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
@@ -26,9 +25,6 @@ export default class MainScene extends Phaser.Scene {
         this.inactivityEvent = null;
         this.logoScale = 0.45; // starting logo scale
         this.ctaScale = 0.45; // starting cta scale
-
-        // carousel settings
-        this.useCarousel = false; // use carousel
 
         // Delta time handling
         this.targetFPS = 60;
@@ -135,10 +131,6 @@ export default class MainScene extends Phaser.Scene {
         this.uiHand = new UIHand.default(this);
         // Initialize particle factory
         this.particleFactory = new ParticleFactory.default(this);
-        // Initialize carousel (optional)
-        if(this.useCarousel) {
-            this.carousel = new Carousel.default(this);
-        }
         // Create game objects - Main Game Objects
         this.createGameObjects();
         // Setup event listeners
@@ -217,24 +209,6 @@ export default class MainScene extends Phaser.Scene {
  
         // Start Tut Tween
         this.startTutTextTween();
-
-        // Create carousel
-        if(this.useCarousel) {
-            this.carousel.createCarousel(this.centerX, this.centerY, 600 * this.scaleFactor);
-        
-            // Start auto-scrolling (optional)
-            //this.carousel.startScrolling();
-
-            // Show debug bounds (optional)
-            this.carousel.showDebugBounds();
-
-            // Center item by index (optional)
-            this.carousel.centerItemByIndex(2);
-
-            // Timed scroll carousel
-            this.carousel.timedScrollCarousel(2000);
-        }
-
 
         // this.testText = this.add.text(this.centerX, this.centerY, 'Hello', { fontFamily: 'speechFont', fontSize: '32px', color: '#ffffff' });
         // this.testText.setDepth(50);
@@ -522,11 +496,6 @@ export default class MainScene extends Phaser.Scene {
 
         // create ember emitter
         this.particleFactory.createEmberEmitter('ember');
-
-        // update carousel position
-        if(this.useCarousel) {
-            this.carousel.updateCarouselPosition(this.centerX, this.centerY);
-        }
         
         // Resume the scene after resizing
         this.scene.resume();
