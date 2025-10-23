@@ -19,7 +19,7 @@ export default class PreloaderScene extends Phaser.Scene {
         this.loadWebFonts(); 
         
         const audioFiles = {
-            //sound_fx: require('../audio/sound_fx.mp3')
+            click: require('../audio/click.mp3')
         };
         
         const textureFiles = {
