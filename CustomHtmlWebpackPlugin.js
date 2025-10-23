@@ -17,10 +17,17 @@ class CustomHtmlWebpackPlugin {
         return callback();
       }
 
-      // Replace script tags with the bundled script
+      // Replace script tags with the bundled script, but preserve mraid.js
       htmlContent = htmlContent.replace(
-        /<script.*?src=["'].*?["'].*?><\/script>/g,
-        `<script src="${compilation.outputOptions.filename}"></script>`
+        /<script.*?src=["'](.*?)["'].*?><\/script>/g,
+        (match, src) => {
+          // Preserve mraid.js script tag
+          if (src.includes('mraid.js')) {
+            return match;
+          }
+          // Replace other script tags with the bundled script
+          return `<script src="${compilation.outputOptions.filename}"></script>`;
+        }
       );
 
       compilation.assets[this.filename] = {
