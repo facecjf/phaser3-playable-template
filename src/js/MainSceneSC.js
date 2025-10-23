@@ -111,8 +111,10 @@ export default class MainScene extends Phaser.Scene {
         this.setupEventListeners();
         // Notify ad network that game ad is loaded
         this.adNetworkManager.loadedGameAd();
-        // Initialize Audio
+
+        // Initialize Audio Files
         // e.g. this.audioFile = this.sound.add('audioFile', { loop: false, volume: 1.5 });
+        this.clickSound = this.sound.add('click', { loop: false, volume: 1.0 });
 
         // Make scene globally accessible for MRAID audio control
         window.gameScene = this;
@@ -372,15 +374,8 @@ export default class MainScene extends Phaser.Scene {
             this.adNetworkManager.handleBigabidEngagement();
         } 
 
-        //// TESTING PARTICLE FACTORY ////
-
-        // Create explosion particle emitter 
-        // (use: this.createExplosionEmitter(x, y, lifespan, speedMin, speedMax, scaleStart, scaleEnd, gravityY, blendMode, quantity) )
-        //this.particleFactory.createExplosionEmitter(this.input.activePointer.x, this.input.activePointer.y, 'ember', 4000, 20, 150, 0.8, 0, 300, 'ADD', 48);
-        
-        // Create bounds particle emitter
-        // (use: this.createBoundsEmitter(texture, object, blendMode, zoneQuantity, quantity, startQuantity, lifespan, speed, scaleStart, scaleEnd, duration, emitting) )
-        //this.particleFactory.createBoundsEmitter('ember', this.tutText, 'ADD', 100, 48, 48, 1500, 24, 0.5, 0, 3000, false);
+        // Play click sound (optional)
+        this.clickSound.play();
     }
 
     // Setup event listeners
