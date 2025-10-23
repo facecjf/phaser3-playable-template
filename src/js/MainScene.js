@@ -210,8 +210,19 @@ export default class MainScene extends Phaser.Scene {
         // Start Tut Tween
         this.startTutTextTween();
 
-        // this.testText = this.add.text(this.centerX, this.centerY, 'Hello', { fontFamily: 'speechFont', fontSize: '32px', color: '#ffffff' });
-        // this.testText.setDepth(50);
+        // Create area emitter (optional)
+        // use: this.particleFactory.createAreaEmitter(texture, object, blendMode, particleDuration)
+        this.particleFactory.createAreaEmitter('sparkle', this.tutText, 'ADD', 500);
+
+        this.testText = this.add.text(this.centerX, this.centerY, 'WEB FONT TEXT', { fontFamily: 'mainFont', fontSize: this.fontSize, color: '#ffffff' });
+        this.testTextBaseScale = this.scaleFactor; // Set the base scale
+        this.testText.setScale(this.testTextBaseScale);
+        this.testText.setDepth(50);
+        this.testText.setOrigin(0.5, 0.5);
+
+         // Create area emitter 2
+        // use: this.particleFactory.createAreaEmitter2(texture, object, startScale, blendMode, particleDuration, frequency, xOffset, yOffset)
+        this.particleFactory.createAreaEmitter2('sparkle', this.testText, 0.5, 'ADD', 1000, 50, 50, 20);
 
         // ADD CALLS TO NEW GAME METHODS HERE //
     }
@@ -262,7 +273,7 @@ export default class MainScene extends Phaser.Scene {
         //     .setTint(0xFFFFFF);
 
         //Add web font text to tutBG
-        this.tutText = this.add.text(this.centerX, tutY, this.getLocalizedText('game_tut'), { fontFamily: 'mainFont', fontSize: this.fontSize, color: '#FFFFFF' })
+        this.tutText = this.add.text(this.centerX, tutY, this.getLocalizedText('game_tut'), { fontFamily: 'mainFont', fontSize: this.fontSize, color: '#00F7FF' })
             .setDepth(11)
             .setOrigin(0.5)
             .setTint(0xFFFFFF);
@@ -582,6 +593,13 @@ export default class MainScene extends Phaser.Scene {
 
         this.tutTextBaseScale = this.scaleFactor;
         this.tutText.setPosition(this.centerX, tutY);
+
+        if (this.testText) {
+            this.particleFactory.stopAreaEmitter2();
+            this.testText.setPosition(this.centerX, this.centerY);
+            this.testText.setScale(this.testTextBaseScale);
+            this.particleFactory.createAreaEmitter2('sparkle', this.testText, 0.5, 'ADD', 1000, 50, 50, 20);
+        }
         
         if (this.tutTextTween && this.tutTextTween.isPlaying()) {
             this.stopTutTextTween();
@@ -631,6 +649,7 @@ export default class MainScene extends Phaser.Scene {
         // Ensure these elements remain hidden
         //this.tutBG.setVisible(false);
         this.tutText.setVisible(false);
+
     }
 
     // Handle end of game transition (optional)
@@ -638,6 +657,18 @@ export default class MainScene extends Phaser.Scene {
         // Stop any ongoing game logic
         this.gameOver = true;
         this.uiHand.removeUIHandTweens();
+
+        //// OPTIONAL PARTICLE FACTORY ////
+        // Stop area emitter
+        if (this.particleFactory && this.particleFactory.areaEmitter) {
+            this.particleFactory.stopAreaEmitter();
+        }
+        // Stop area emitter 2
+        if (this.testText) {
+            this.particleFactory.stopAreaEmitter2();
+            this.testText.visible = false;
+        }
+        //// END OPTIONAL PARTICLE FACTORY ////
 
         // Hide tutorial and timer elements
         //this.tutBG.setVisible(false);

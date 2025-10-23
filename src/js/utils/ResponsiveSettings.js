@@ -83,7 +83,7 @@ export default class ResponsiveSettings {
             console.log('%cResponsiveSettings::Device: tablet', 'color: #00e1f8; background:rgb(29, 29, 29);');
             return 'tablet';
         // check if small phone
-        } else if ((this.gameWidth >= 712 && this.gameHeight >= 1024) || (this.gameWidth >= 1024 && this.gameHeight >= 712)) {
+        } else if ((this.gameWidth >= 712 && this.gameHeight >= 1138) || (this.gameWidth >= 1138 && this.gameHeight >= 712)) {
             console.log('%cResponsiveSettings::Device: tablet', 'color: #00e1f8; background:rgb(29, 29, 29);');
             return 'androidTablet';
         // check if small phone

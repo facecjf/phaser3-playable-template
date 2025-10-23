@@ -4,6 +4,9 @@ export default class ParticleFactory {
         this.emberEmitter = null;
         this.explosionEmitter = null;
         this.boundsEmitter = null;
+        this.areaEmitter = null;
+        this.areaEmitter2 = [];
+        this.confettiEmitter = null;
     }
 
     // EMBERS //////////////////////////////////////////////////////////////
@@ -119,7 +122,7 @@ export default class ParticleFactory {
     // AREA EMITTER //////////////////////////////////////////////////////////////
     // Create emitter object area
     createAreaEmitter(texture, object, blendMode, particleDuration) {
-        const randomX = Phaser.Math.Between(object.x - object.displayWidth/2, object.x + object.displayWidth/2);
+        const randomX = Phaser.Math.Between((object.x - object.displayWidth/2), (object.x + object.displayWidth/2));
         const randomY = Phaser.Math.Between((object.y - object.displayHeight/2), (object.y + object.displayHeight/2));
         
         this.areaEmitter = this.scene.add.image(randomX, randomY, texture)
@@ -143,6 +146,7 @@ export default class ParticleFactory {
                 this.createAreaEmitter(texture, object, blendMode, particleDuration);
             }
         });
+        
     }
 
     // Stop and destroy area emitter
@@ -150,19 +154,22 @@ export default class ParticleFactory {
         if (this.areaEmitter) {
             this.areaEmitter.destroy();
             this.areaEmitter = null;
+            this.areaEmitterTween.destroy();
+            this.areaEmitterTween = null;
         }
     }
     // AREA EMITTER 2 //////////////////////////////////////////////////////////////
     // Create area emitter 2
-    createAreaEmitter2(texture, object, blendMode, particleDuration, frequency, yOffset) {
-        this.areaEmitter2.push(this.scene.add.particles(0, object.y + yOffset, texture, {
+    createAreaEmitter2(texture, object, startScale, blendMode, particleDuration, frequency, xOffset, yOffset) {
+        this.areaEmitter2.push(this.scene.add.particles(0, 0, texture, {
             speed: {min: 5, max: 50},
             lifespan: 1500,
-            scale: {start: 0.25 * this.scene.scaleFactor, end: 0},
+            scale: {start: startScale * this.scene.scaleFactor, end: 0},
             gravityY: 0,
             blendMode: blendMode,
             quantity: 1,
-            x: { min: object.x - object.displayWidth/2 * this.scene.scaleFactor, max: object.x + object.displayWidth/2 * this.scene.scaleFactor },
+            x: { min: object.x - xOffset * this.scene.scaleFactor - object.displayWidth/2 * this.scene.scaleFactor, max: object.x + xOffset * this.scene.scaleFactor + object.displayWidth/2 * this.scene.scaleFactor },
+            y: { min: object.y - yOffset * this.scene.scaleFactor - object.displayHeight/2 * this.scene.scaleFactor, max: object.y + yOffset * this.scene.scaleFactor + object.displayHeight/2 * this.scene.scaleFactor },
             frequency: frequency,
             advance: particleDuration,
             emitCallback: (particle) => {
@@ -176,9 +183,7 @@ export default class ParticleFactory {
                     particle.stop();
                 }
             },
-            
         }));
-
     }
 
     // Stop and destroy area emitter 2
