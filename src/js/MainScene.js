@@ -120,7 +120,6 @@ export default class MainScene extends Phaser.Scene {
         //     this.fontSize = this.languageData[this.currentLanguage].fontSize;
         // }
         
-
         // Initialize delta time handling
         this.initializeDeltaTimeHandling();
         // Initialize game camera
