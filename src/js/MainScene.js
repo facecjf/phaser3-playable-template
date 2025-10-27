@@ -4,12 +4,12 @@ import * as ResponsiveSettings from './utils/ResponsiveSettings';
 import * as CTA from './utils/CTA';
 import * as UIHand from './utils/UIHand';
 import * as ParticleFactory from './utils/ParticleFactory';
+import * as Languages from '../data/Languages';
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
         super({ key: 'Main' }); // Set the scene key
         this.adNetworkManager = new AdNetworkManager.default(); // Initialize ad network manager
-        this.currentLanguage = 'en-us'; // Default language
         //this.timeRemaining = 30; // Initial time for the countdown timer
         this.timerStarted = false; // Flag to check if timer has started
         this.tutTextTween = null; // Tween for tutorial text animation
@@ -31,28 +31,16 @@ export default class MainScene extends Phaser.Scene {
         this.deltaMultiplier = 1;
         this.lastFrameTime = 0;
 
+        // Current language - changed at build time looping through all languages
+        this.currentLanguage = 'ko-kr';
+
+        // Initialize languages
+        this.languages = new Languages.default(this);
+        // Get language data
+        this.languageData = this.languages.getLanguageData(this.currentLanguage) || this.languages.getLanguageData('en-us');
         // font size
-        if(this.currentLanguage === 'ja-jp') {
-            this.fontSize = '36px';
-        } else if(this.currentLanguage === 'ko-kr') {
-            this.fontSize = '48px';
-        }else if(this.currentLanguage === 'ru-ru') {
-            this.fontSize = '32px';
-        }else if(this.currentLanguage === 'es-es') {
-            this.fontSize = '48px';
-        }else if(this.currentLanguage === 'es-mx') {
-            this.fontSize = '48px';
-        }else if(this.currentLanguage === 'fr-fr') {
-            this.fontSize = '48px';
-        }else if(this.currentLanguage === 'it-it') {
-            this.fontSize = '48px';
-        }else if(this.currentLanguage === 'pt-br') {
-            this.fontSize = '48px';
-        }else if(this.currentLanguage === 'tr-tr') {
-            this.fontSize = '48px';
-        } else {
-            this.fontSize = '48px';
-        }
+        this.fontSize = this.languageData['fontSize'];
+
     }
 
     // Create the scene
@@ -71,55 +59,67 @@ export default class MainScene extends Phaser.Scene {
         this.isPortrait = this.responsiveSettings.isPortrait;
         this.isLandscape = this.responsiveSettings.isLandscape;
         
-        // Load language data from cache
-        //this.languageData = this.cache.json.get('languages');
+        // // Get language data
+        // this.languageData = this.languages.getLanguageData(this.currentLanguage);
+        // // font size
+        // this.fontSize = this.languages.getLanguageData(this.currentLanguage).fontSize;
+
+        // if(!this.languageData) {
+        //     this.languageData = {
+        //         'en-us': {
+        //             'play_now': 'PLAY NEVER',
+        //             'game_tut': 'TUTORIAL MESSAGE!',
+        //             'fontSize': '48px'
+        //         },
+        //         'es-es': {
+        //             'play_now': 'JUEGA\nAHORA',
+        //             'game_tut': '¡MENSAJE TUTORIAL!',
+        //             'fontSize': '48px'
+        //         },
+        //         'es-mx': {
+        //             'play_now': 'JUEGA\nAHORA',
+        //             'game_tut': '¡MENSAJE TUTORIAL!',
+        //             'fontSize': '48px'
+        //         },
+        //         'fr-fr': {
+        //             'play_now': 'JOUER\nMAINTENANT',
+        //             'game_tut': 'MESSAGE DU TUTORIEL !',
+        //             'fontSize': '48px'
+        //         },
+        //         'it-it': {
+        //             'play_now': 'GIOCA ORA',
+        //             'game_tut': 'MESSAGGIO DEL TUTORIAL!',
+        //             'fontSize': '48px'
+        //         },
+        //         'pt-br': {
+        //             'play_now': 'JOGUE AGORA',
+        //             'game_tut': 'MENSAGEM DO TUTORIAL!',
+        //             'fontSize': '48px'
+        //         },
+        //         'ru-ru': {
+        //             'play_now': 'ИГРАТЬ СЕЙЧАС',
+        //             'game_tut': 'ОБУЧАЮЩЕЕ СООБЩЕНИЕ!',
+        //             'fontSize': '48px'
+        //         },
+        //         'tr-tr': {
+        //             'play_now': 'ŞİMDİ OYNA',
+        //             'game_tut': 'ÖĞRETICI MESAJ!',
+        //             'fontSize': '48px'
+        //         },
+        //         'ja-jp': {
+        //             'play_now': '今すぐプレイ',
+        //             'game_tut': 'チュートリアルメッセージ!',
+        //             'fontSize': '48px'
+        //         },
+        //         'ko-kr': {
+        //             'play_now': '지금 플레이',
+        //             'game_tut': '튜토리얼 메시지!',
+        //             'fontSize': '48px'
+        //         }
+        //     }
+        //     this.fontSize = this.languageData[this.currentLanguage].fontSize;
+        // }
         
-        // Fallback language data if not loaded
-        if (!this.languageData) {
-            console.warn('Language data not loaded. Using fallback.');
-            this.languageData = {
-                "en-us": {
-                    "play_now": "PLAY NOW",
-                    "game_tut": "TUTORIAL MESSAGE!"
-                },
-                "es-es": {
-                    "play_now": "JUEGA\nAHORA",
-                    "game_tut": "¡MENSAJE TUTORIAL!"
-                },
-                "es-mx": {
-                    "play_now": "JUEGA\nAHORA",
-                    "game_tut": "¡MENSAJE TUTORIAL!"
-                },
-                "fr-fr": {
-                    "play_now": "JOUER\nMAINTENANT",
-                    "game_tut": "MESSAGE DU TUTORIEL !"
-                },
-                "it-it": {
-                    "play_now": "GIOCA ORA",
-                    "game_tut": "MESSAGGIO DEL TUTORIAL!"
-                },
-                "pt-br": {
-                    "play_now": "JOGUE AGORA",
-                    "game_tut": "MENSAGEM DO TUTORIAL!"
-                },
-                "ru-ru": {
-                    "play_now": "ИГРАТЬ СЕЙЧАС",
-                    "game_tut": "ОБУЧАЮЩЕЕ СООБЩЕНИЕ!"
-                },
-                "tr-tr": {
-                    "play_now": "ŞİMDİ OYNA",
-                    "game_tut": "ÖĞRETICI MESAJ!"
-                },
-                "ja-jp": {
-                    "play_now": "今すぐプレイ",
-                    "game_tut": "チュートリアルメッセージ!"
-                },
-                "ko-kr": {
-                    "play_now": "지금 플레이",
-                    "game_tut": "튜토리얼 메시지!"
-                }
-            };
-        }
 
         // Initialize delta time handling
         this.initializeDeltaTimeHandling();
@@ -216,7 +216,7 @@ export default class MainScene extends Phaser.Scene {
         // use: this.particleFactory.createAreaEmitter(texture, object, blendMode, particleDuration)
         this.particleFactory.createAreaEmitter('sparkle', this.tutText, 'ADD', 500);
 
-        this.testText = this.add.text(this.centerX, this.centerY, 'WEB FONT TEXT', { fontFamily: 'mainFont', fontSize: this.fontSize, color: '#ffffff' });
+        this.testText = this.add.text(this.centerX, this.centerY, this.getLocalizedText('test_text'), { fontFamily: 'mainFont', fontSize: this.fontSize, color: '#ffffff' });
         this.testTextBaseScale = this.scaleFactor; // Set the base scale
         this.testText.setScale(this.testTextBaseScale);
         this.testText.setDepth(50);
@@ -738,15 +738,15 @@ export default class MainScene extends Phaser.Scene {
 
     // Get localized text based on current language
     getLocalizedText(key) {
-        if (this.languageData && this.languageData[this.currentLanguage] && this.languageData[this.currentLanguage][key]) {
-            return this.languageData[this.currentLanguage][key];
+        if (this.languages.getLanguageData(this.currentLanguage) && this.languages.getLanguageData(this.currentLanguage)[key]) {
+            return this.languages.getLanguageData(this.currentLanguage)[key];
         }
         return key; // Fallback to key if translation not found
     }
 
     // Set the current language
     setLanguage(languageCode) {
-        if (this.languageData[languageCode]) {
+        if (this.languages.getLanguageData(languageCode)) {
             this.currentLanguage = languageCode;
             this.updateAllText();
         } else {

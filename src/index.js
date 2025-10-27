@@ -1,9 +1,9 @@
 import Phaser from 'phaser';
 import PreloaderScene from './js/PreloaderScene.js';
 // Standard Playable
-import MainScene from './js/MainScene.js';
+//import MainScene from './js/MainScene.js';
 // Single Click Playable
-//import MainScene from './js/MainSceneSC.js';
+import MainScene from './js/MainSceneSC.js';
 
 const gameConfig = {
     type: Phaser.AUTO,

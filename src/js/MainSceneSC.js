@@ -5,12 +5,12 @@ import * as CTA from './utils/CTA';
 import * as UIHand from './utils/UIHand';
 import * as ParticleFactory from './utils/ParticleFactory';
 import * as Carousel from './utils/Carousel';
+import * as Languages from '../data/Languages';
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
         super({ key: 'Main' }); // Set the scene key
         this.adNetworkManager = new AdNetworkManager.default(); // Initialize ad network manager
-        this.currentLanguage = 'en-us'; // Default language
         //this.timeRemaining = 30; // Initial time for the countdown timer
         this.timerStarted = false; // Flag to check if timer has started
         this.tutTextTween = null; // Tween for tutorial text animation
@@ -35,28 +35,16 @@ export default class MainScene extends Phaser.Scene {
         this.deltaMultiplier = 1;
         this.lastFrameTime = 0;
 
+        // Current language - changed at build time looping through all languages
+        this.currentLanguage = 'en-us';
+
+        // Initialize languages
+        this.languages = new Languages.default(this);
+        // Get language data
+        this.languageData = this.languages.getLanguageData(this.currentLanguage) || this.languages.getLanguageData('en-us');
         // font size
-        if(this.currentLanguage === 'ja-jp') {
-            this.fontSize = '36px';
-        } else if(this.currentLanguage === 'ko-kr') {
-            this.fontSize = '48px';
-        }else if(this.currentLanguage === 'ru-ru') {
-            this.fontSize = '32px';
-        }else if(this.currentLanguage === 'es-es') {
-            this.fontSize = '48px';
-        }else if(this.currentLanguage === 'es-mx') {
-            this.fontSize = '48px';
-        }else if(this.currentLanguage === 'fr-fr') {
-            this.fontSize = '48px';
-        }else if(this.currentLanguage === 'it-it') {
-            this.fontSize = '48px';
-        }else if(this.currentLanguage === 'pt-br') {
-            this.fontSize = '48px';
-        }else if(this.currentLanguage === 'tr-tr') {
-            this.fontSize = '48px';
-        } else {
-            this.fontSize = '48px';
-        }
+        this.fontSize = this.languageData['fontSize'];
+
 
     }
 
@@ -76,21 +64,6 @@ export default class MainScene extends Phaser.Scene {
         this.isPortrait = this.responsiveSettings.isPortrait;
         this.isLandscape = this.responsiveSettings.isLandscape;
         
-        // Load language data from cache
-        //this.languageData = this.cache.json.get('languages');
-        
-        // Fallback language data if not loaded
-        if (!this.languageData) {
-            console.warn('Language data not loaded. Using fallback.');
-            this.languageData = {
-                "en-us": {
-                    "play_now": "Play Now",
-                    "game_tut": 'Tutorial Message!'
-                    // ... other fallback texts ...
-                }
-            };
-        }
-
         // Initialize delta time handling
         this.initializeDeltaTimeHandling();
         // Initialize game camera
@@ -203,7 +176,7 @@ export default class MainScene extends Phaser.Scene {
         // use: this.particleFactory.createAreaEmitter2(texture, object, startScale, blendMode, particleDuration, frequency, xOffset, yOffset)
         this.particleFactory.createAreaEmitter2('sparkle', this.tutText, 0.5, 'ADD', 1000, 10, 50, 20);
         
-        this.testText = this.add.text(this.centerX, this.centerY, 'WEB FONT TEXT', { fontFamily: 'mainFont', fontSize: this.fontSize, color: '#ffffff' });
+        this.testText = this.add.text(this.centerX, this.centerY, this.getLocalizedText('test_text'), { fontFamily: 'mainFont', fontSize: this.fontSize, color: '#ffffff' });
         this.testTextBaseScale = this.scaleFactor; // Set the base scale
         this.testText.setScale(this.testTextBaseScale);
         this.testText.setDepth(50);
@@ -622,15 +595,15 @@ export default class MainScene extends Phaser.Scene {
 
     // Get localized text based on current language
     getLocalizedText(key) {
-        if (this.languageData && this.languageData[this.currentLanguage] && this.languageData[this.currentLanguage][key]) {
-            return this.languageData[this.currentLanguage][key];
+        if (this.languages.getLanguageData(this.currentLanguage) && this.languages.getLanguageData(this.currentLanguage)[key]) {
+            return this.languages.getLanguageData(this.currentLanguage)[key];
         }
         return key; // Fallback to key if translation not found
     }
 
     // Set the current language
     setLanguage(languageCode) {
-        if (this.languageData[languageCode]) {
+        if (this.languages.getLanguageData(languageCode)) {
             this.currentLanguage = languageCode;
             this.updateAllText();
         } else {
