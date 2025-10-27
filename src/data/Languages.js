@@ -27,43 +27,43 @@ export default class Languages {
             'fr-fr': {
                 'play_now': 'JOUER\nMAINTENANT',
                 'game_tut': 'MESSAGE DU TUTORIEL !',
-                'test_text': 'TEXTO DE PRUEBA',
+                'test_text': 'TEXTE DE POLICE WEB',
                 'fontSize': '48px'
             },
             'it-it': {
                 'play_now': 'GIOCA ORA',
                 'game_tut': 'MESSAGGIO DEL TUTORIAL!',
-                'test_text': 'TEXTO DE PRUEBA',
+                'test_text': 'TESTO DI FONTE WEB',
                 'fontSize': '48px'
             },
             'pt-br': {
                 'play_now': 'JOGUE AGORA',
                 'game_tut': 'MENSAGEM DO TUTORIAL!',
-                'test_text': 'TEXTO DE PRUEBA',
+                'test_text': 'TEXTO DA FONTE DA WEB',
                 'fontSize': '48px'
             },
             'ru-ru': {
                 'play_now': 'ИГРАТЬ СЕЙЧАС',
                 'game_tut': 'ОБУЧАЮЩЕЕ СООБЩЕНИЕ!',
-                'test_text': 'TEXTO DE PRUEBA',
+                'test_text': 'ВЕБ-ФОНТ ТЕКСТ',
                 'fontSize': '48px'
             },
             'tr-tr': {
                 'play_now': 'ŞİMDİ OYNA',
                 'game_tut': 'ÖĞRETICI MESAJ!',
-                'test_text': 'TEXTO DE PRUEBA',
+                'test_text': 'WEB YAZI TİPİ METNİ',
                 'fontSize': '48px'
             },
             'ja-jp': {
                 'play_now': '今すぐプレイ',
                 'game_tut': 'チュートリアルメッセージ!',
-                'test_text': 'TEXTO DE PRUEBA',
+                'test_text': 'ウェブフォントテキスト',
                 'fontSize': '48px'
             },
             'ko-kr': {
                 'play_now': '지금 플레이',
                 'game_tut': '튜토리얼 메시지!',
-                'test_text': 'TEXTO DE PRUEBA',
+                'test_text': '웹 폰트 텍스트',
                 'fontSize': '48px'
             }
         }
