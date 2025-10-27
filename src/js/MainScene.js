@@ -32,7 +32,7 @@ export default class MainScene extends Phaser.Scene {
         this.lastFrameTime = 0;
 
         // Current language - changed at build time looping through all languages
-        this.currentLanguage = 'ko-kr';
+        this.currentLanguage = 'en-us';
 
         // Initialize languages
         this.languages = new Languages.default(this);
