@@ -59,67 +59,6 @@ export default class MainScene extends Phaser.Scene {
         this.isPortrait = this.responsiveSettings.isPortrait;
         this.isLandscape = this.responsiveSettings.isLandscape;
         
-        // // Get language data
-        // this.languageData = this.languages.getLanguageData(this.currentLanguage);
-        // // font size
-        // this.fontSize = this.languages.getLanguageData(this.currentLanguage).fontSize;
-
-        // if(!this.languageData) {
-        //     this.languageData = {
-        //         'en-us': {
-        //             'play_now': 'PLAY NEVER',
-        //             'game_tut': 'TUTORIAL MESSAGE!',
-        //             'fontSize': '48px'
-        //         },
-        //         'es-es': {
-        //             'play_now': 'JUEGA\nAHORA',
-        //             'game_tut': '¡MENSAJE TUTORIAL!',
-        //             'fontSize': '48px'
-        //         },
-        //         'es-mx': {
-        //             'play_now': 'JUEGA\nAHORA',
-        //             'game_tut': '¡MENSAJE TUTORIAL!',
-        //             'fontSize': '48px'
-        //         },
-        //         'fr-fr': {
-        //             'play_now': 'JOUER\nMAINTENANT',
-        //             'game_tut': 'MESSAGE DU TUTORIEL !',
-        //             'fontSize': '48px'
-        //         },
-        //         'it-it': {
-        //             'play_now': 'GIOCA ORA',
-        //             'game_tut': 'MESSAGGIO DEL TUTORIAL!',
-        //             'fontSize': '48px'
-        //         },
-        //         'pt-br': {
-        //             'play_now': 'JOGUE AGORA',
-        //             'game_tut': 'MENSAGEM DO TUTORIAL!',
-        //             'fontSize': '48px'
-        //         },
-        //         'ru-ru': {
-        //             'play_now': 'ИГРАТЬ СЕЙЧАС',
-        //             'game_tut': 'ОБУЧАЮЩЕЕ СООБЩЕНИЕ!',
-        //             'fontSize': '48px'
-        //         },
-        //         'tr-tr': {
-        //             'play_now': 'ŞİMDİ OYNA',
-        //             'game_tut': 'ÖĞRETICI MESAJ!',
-        //             'fontSize': '48px'
-        //         },
-        //         'ja-jp': {
-        //             'play_now': '今すぐプレイ',
-        //             'game_tut': 'チュートリアルメッセージ!',
-        //             'fontSize': '48px'
-        //         },
-        //         'ko-kr': {
-        //             'play_now': '지금 플레이',
-        //             'game_tut': '튜토리얼 메시지!',
-        //             'fontSize': '48px'
-        //         }
-        //     }
-        //     this.fontSize = this.languageData[this.currentLanguage].fontSize;
-        // }
-        
         // Initialize delta time handling
         this.initializeDeltaTimeHandling();
         // Initialize game camera
