@@ -8,7 +8,7 @@
 - All assets will automatically be base64 encoded and embedded in the project.
 - Updated preloader methods for handling bitmap base64 encoded correctly
 - Custom build.js Build script with `node build.js` that targets designated Ad Networks
-- Localization support via `languages.json`
+- Localization support via `Languages.js`
 
 ## Updates  
 
@@ -31,9 +31,12 @@
 ### In The Works
 :pushpin: Incorporate Languages in build script
 
+### Completed
 :heavy_check_mark: Update build for correct output based on 'INDEX' template html files
 
 :heavy_check_mark: Update build for selectable ad networks
+
+:heavy_check_mark: Single file store links
 
 ### Requirements
 [Node.js](https://nodejs.org/) (with npm)
