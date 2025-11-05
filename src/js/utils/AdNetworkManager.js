@@ -206,53 +206,53 @@ export default class AdNetworkManager {
             case 'chartboost':
                 mraid.getState();
                 break;
-            // case 'ironsource':
-            //     if (typeof mraid !== 'undefined') {
-            //         // 1 helper so we don't duplicate the start logic
-            //         const tryStartGame = () => {
-            //             if (
-            //                 this.isAdVisible &&          // the ad is on‑screen
-            //                 this.isMraidReady &&         // 'ready' event has fired
-            //                 this.isStatePlayable &&      // state is default|expanded
-            //                 !this.gameStarted            // we haven't started yet
-            //             ) {
-            //                 this.startGameAd();
-            //             }
-            //         };
+            case 'ironsource':
+                if (typeof mraid !== 'undefined') {
+                    // 1 helper so we don't duplicate the start logic
+                    const tryStartGame = () => {
+                        if (
+                            this.isAdVisible &&          // the ad is on‑screen
+                            this.isMraidReady &&         // 'ready' event has fired
+                            this.isStatePlayable &&      // state is default|expanded
+                            !this.gameStarted            // we haven't started yet
+                        ) {
+                            this.startGameAd();
+                        }
+                    };
     
-            //         // 2 READY 
-            //         this.isMraidReady = false;
-            //         mraid.addEventListener('ready', () => {
-            //             console.log('IS: mraid ready');
-            //             this.isMraidReady = true;
-            //             tryStartGame();
-            //         });
+                    // 2 READY 
+                    this.isMraidReady = false;
+                    mraid.addEventListener('ready', () => {
+                        console.log('IS: mraid ready');
+                        this.isMraidReady = true;
+                        tryStartGame();
+                    });
     
-            //         // 3 STATE CHANGE
-            //         this.isStatePlayable = false;
-            //         const onStateChange = (state) => {
-            //             this.isStatePlayable = (state === 'default' || state === 'expanded');
-            //             console.log(`IS: state → ${state}`);
-            //             tryStartGame();
-            //         };
-            //         mraid.addEventListener('stateChange', onStateChange);
+                    // 3 STATE CHANGE
+                    this.isStatePlayable = false;
+                    const onStateChange = (state) => {
+                        this.isStatePlayable = (state === 'default' || state === 'expanded');
+                        console.log(`IS: state → ${state}`);
+                        tryStartGame();
+                    };
+                    mraid.addEventListener('stateChange', onStateChange);
     
-            //         // If mraid is already injected & ready you won't get a ready
-            //         // event, so we normalise the current values immediately.
-            //         if (mraid.getState() !== 'loading') {
-            //             this.isMraidReady = true;
-            //             onStateChange(mraid.getState());
-            //         }
+                    // If mraid is already injected & ready you won't get a ready
+                    // event, so we normalise the current values immediately.
+                    if (mraid.getState() !== 'loading') {
+                        this.isMraidReady = true;
+                        onStateChange(mraid.getState());
+                    }
     
-            //         // 4 VIEWABILITY
-            //         mraid.addEventListener(
-            //             'viewableChange',
-            //             this.handleViewableChange.bind(this)
-            //         );
-            //         // prime the visibility flag
-            //         this.isAdVisible = mraid.isViewable();
-            //     }
-            //     break;
+                    // 4 VIEWABILITY
+                    mraid.addEventListener(
+                        'viewableChange',
+                        this.handleViewableChange.bind(this)
+                    );
+                    // prime the visibility flag
+                    this.isAdVisible = mraid.isViewable();
+                }
+                break;
             case 'mintegral':
                 window.gameReady && window.gameReady();
                 break;
@@ -268,18 +268,18 @@ export default class AdNetworkManager {
                     }
                 }
                 break;
-            case 'ironsource':
-                // Set up viewableChange event listener for ironsource ads
-                if (typeof mraid !== 'undefined') {
-                    mraid.addEventListener('viewableChange', this.handleViewableChange.bind(this));
+            // case 'ironsource':
+            //     // Set up viewableChange event listener for ironsource ads
+            //     if (typeof mraid !== 'undefined') {
+            //         mraid.addEventListener('viewableChange', this.handleViewableChange.bind(this));
                     
-                    // Check if the ad is already viewable
-                    if (mraid.isViewable()) {
-                        this.isAdVisible = true;
-                        console.log('Ironsource: Ad is initially viewable');
-                    }
-                }
-                break;
+            //         // Check if the ad is already viewable
+            //         if (mraid.isViewable()) {
+            //             this.isAdVisible = true;
+            //             console.log('Ironsource: Ad is initially viewable');
+            //         }
+            //     }
+            //     break;
             case 'bigabid':
                 this.fireBigabidMacro('mraid_viewable');
                 console.log('Bigabid: mraid_viewable fired');
@@ -294,9 +294,9 @@ export default class AdNetworkManager {
 
     audioVolumeChange(volume) {
         switch (this.adNetwork) {
-            // case 'ironsource':
-            //     mraid.setVolume(volume);
-            //     break;
+            case 'ironsource':
+                mraid.setVolume(volume);
+                break;
             case 'development':
                 console.log('%cAdNetwork Manager::Development audio volume change', 'color: #f87c00; background:rgb(29, 29, 29);');
                 break;
