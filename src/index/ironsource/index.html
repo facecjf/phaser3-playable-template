@@ -92,19 +92,12 @@
     }
 </script>
 <script>
-	  var userAgent = navigator.userAgent || navigator.vendor;
+	var userAgent = navigator.userAgent || navigator.vendor;
     var url = 'https://google.com'; // IOS
     var android = 'https://google.com'; // ANDROID
     if (/android/i.test(userAgent)) {
       url = android;
-	  };  /* Call window.openStore(anyUrl) from your game */
-  window.openStore = function (url) {
-    if (typeof mraid !== "undefined") {
-      mraid.open(url);
-    } else {
-      window.open(url, "_blank");
-    }
-  };
+	  };  
 </script>
 </head>
 <body>
